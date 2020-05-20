@@ -7,7 +7,7 @@ namespace WindWingLeagueSeason2App.Models
     public enum MenuItemType
     {
         Login,
-        Browse,
+        Leaderboards,
         About
     }
     public class HomeMenuItem

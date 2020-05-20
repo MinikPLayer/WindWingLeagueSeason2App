@@ -31,7 +31,7 @@ namespace WindWingLeagueSeason2App.Views
             {
                 menuItems = new List<HomeMenuItem>
                 {
-                    new HomeMenuItem {Id = MenuItemType.Browse, Title="Przeglądaj" },
+                    new HomeMenuItem{Id = MenuItemType.Leaderboards, Title = "Ranking"},
                     new HomeMenuItem {Id = MenuItemType.About, Title="O lidze" }
                 };
             }

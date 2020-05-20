@@ -14,6 +14,9 @@ namespace WindWingLeagueSeason2App.Views
     [DesignTimeVisible(false)]
     public partial class MainPage : MasterDetailPage
     {
+        public static NetworkData networkData;
+        public static string log = "";
+
         Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
         public MainPage()
         {
@@ -23,16 +26,19 @@ namespace WindWingLeagueSeason2App.Views
 
             //MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
             MenuPages.Add((int)MenuItemType.Login, (NavigationPage)Detail);
+
+            networkData = new NetworkData();
         }
 
         public async Task NavigateFromMenu(int id)
         {
+
             if (!MenuPages.ContainsKey(id))
             {
                 switch (id)
                 {
-                    case (int)MenuItemType.Browse:
-                        MenuPages.Add(id, new NavigationPage(new ItemsPage()));
+                    case (int)MenuItemType.Leaderboards:
+                        MenuPages.Add(id, new NavigationPage(new LeaderboardsPage()));
                         break;
                     case (int)MenuItemType.About:
                         MenuPages.Add(id, new NavigationPage(new AboutPage()));
