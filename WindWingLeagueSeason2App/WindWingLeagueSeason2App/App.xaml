@@ -9,9 +9,34 @@
     <Application.Resources>
         <ResourceDictionary>
             <!--Global Styles-->
-            <Color x:Key="NavigationPrimary">#2196F3</Color>
+            <!--<Color x:Key="NavigationPrimary">#2196F3</Color>-->
+            <Color x:Key="NavBarDarkColor">#000000</Color>
+            <Color x:Key="DarkNavigationPrimary">#212121</Color>
+            <Color x:Key="DarkThemeTextColor">#FFFFFF</Color>
+            <Color x:Key="DarkThemeSecondaryTextColor">#AAAAAA</Color>
+            <Color x:Key="DarkSurface">#303030</Color>
+
+
+            <Color x:Key="LightNavigationPrimary">#6200EE</Color>
+            <Color x:Key="LightThemeTextColor">#000000</Color>
+            <Color x:Key="LightThemeSecondaryTextColor">#666666</Color>
+            <Color x:Key="LightSurface">#FFFFFF</Color>
+            <Style ApplyToDerivedTypes="True" TargetType="ContentPage">
+                <Setter Property="BackgroundColor" Value="{DynamicResource DynamicBackgroundColor}"/>
+            </Style>
+
+            <Style ApplyToDerivedTypes="True" TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource DynamicPrimaryTextColor}"/>
+            </Style>
+
+            <Style ApplyToDerivedTypes="True" TargetType="Entry">
+                <Setter Property="TextColor" Value="{DynamicResource DynamicPrimaryTextColor}"/>
+                <Setter Property="PlaceholderColor" Value="{DynamicResource DynamicSecondaryTextColor}"/>
+            </Style>
+
+
             <Style TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
+                <Setter Property="BarBackgroundColor" Value="{DynamicResource DynamicNavigationPrimary}" />
                 <Setter Property="BarTextColor" Value="White" />
             </Style>
         </ResourceDictionary>

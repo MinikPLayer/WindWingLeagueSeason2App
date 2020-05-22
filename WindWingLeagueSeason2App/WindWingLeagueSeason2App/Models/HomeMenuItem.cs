@@ -8,6 +8,7 @@ namespace WindWingLeagueSeason2App.Models
     {
         Login,
         Leaderboards,
+        Options,
         About
     }
     public class HomeMenuItem

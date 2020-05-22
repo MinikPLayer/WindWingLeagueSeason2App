@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:WindWingLeagueSeason2App.Views"
              mc:Ignorable="d"
-             x:Class="WindWingLeagueSeason2App.Views.LoginScreen"
+             x:Class="WindWingLeagueSeason2App.Views.OptionsPage"
              xmlns:vm="clr-namespace:WindWingLeagueSeason2App.ViewModels"
              Title="{Binding Title}">
     
@@ -20,19 +21,10 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <StackLayout>
-            <Label Text="Logowanie" FontSize="64" HorizontalOptions="Center" FontAttributes="Bold" />
-            <Entry x:Name="LoginBox" Placeholder="Login" VerticalOptions="Center" Margin="30,0,30,0"/>
-            <Entry x:Name="PasswordBox" Placeholder="Password" IsPassword="True" VerticalOptions="Center" Margin="30,0,30,0"/>
-            <Button x:Name="LoginButton" Text="Login" HorizontalOptions="Center" Clicked="LoginButton_Clicked"/>
-            <Label x:Name="LoginInfo" Text="" HorizontalOptions="Center"/>
-        </StackLayout>
-        
-    </Grid>
+
+    <StackLayout>
+        <local:LabeledSwitch x:Name="DarkModeSwitch" Title="Ciemny motyw" PropertyChanged="DarkModeSwitch_PropertyChanged"/>
+        <Label x:Name="LogLabel" />
+    </StackLayout>
     
 </ContentPage>

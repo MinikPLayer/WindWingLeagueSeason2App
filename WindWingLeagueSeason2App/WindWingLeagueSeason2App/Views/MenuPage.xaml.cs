@@ -32,7 +32,8 @@ namespace WindWingLeagueSeason2App.Views
                 menuItems = new List<HomeMenuItem>
                 {
                     new HomeMenuItem{Id = MenuItemType.Leaderboards, Title = "Ranking"},
-                    new HomeMenuItem {Id = MenuItemType.About, Title="O lidze" }
+                    new HomeMenuItem {Id = MenuItemType.About, Title="O lidze" },
+                    new HomeMenuItem {Id = MenuItemType.Options, Title="Opcje" }
                 };
             }
             else
@@ -40,7 +41,8 @@ namespace WindWingLeagueSeason2App.Views
                 menuItems = new List<HomeMenuItem>
                 {
                     new HomeMenuItem{Id = MenuItemType.Login, Title="Login"},
-                    new HomeMenuItem {Id = MenuItemType.About, Title="O lidze" }
+                    new HomeMenuItem {Id = MenuItemType.About, Title="O lidze" },
+                    new HomeMenuItem {Id = MenuItemType.Options, Title="Opcje" }
                 };
             }
             ListViewMenu.ItemsSource = menuItems;
@@ -55,6 +57,14 @@ namespace WindWingLeagueSeason2App.Views
                 var id = (int)((HomeMenuItem)e.SelectedItem).Id;
                 await RootPage.NavigateFromMenu(id);
             };
+
+            LogOutButton.IsVisible = LoginScreen.loggedIn;
+        }
+
+        private void LogOutButton_Clicked(object sender, EventArgs e)
+        {
+            LoginScreen loginScreen = (LoginScreen)((MainPage)Application.Current.MainPage).GetLoadedPage(MenuItemType.Login);
+            loginScreen.LogOut();
         }
     }
 }

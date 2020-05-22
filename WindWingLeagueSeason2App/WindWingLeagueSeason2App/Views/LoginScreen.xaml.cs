@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,20 +20,47 @@ namespace WindWingLeagueSeason2App.Views
             InitializeComponent();
 
             Title = "Login";
+        }
 
+        async Task Login(string login, string password)
+        {
+            string data = await MainPage.networkData.RequestAsync("Login;" + login + ";" + password);
+            string[] datas = data.Split(';');
+            if (datas[0] == "OK" && datas.Length > 1)
+            {
+                username = datas[1];
+
+                loggedIn = true;
+
+                MenuPage.actualMenu.UpdateItems();
+            }
+            else
+            {
+                LoginInfo.Text = "Login error, code: " + datas[0];
+            }
+
+            LoginButton.IsEnabled = true;
+        }
+
+        public void LogOut()
+        {
+            if (loggedIn)
+            {
+
+                loggedIn = false;
+
+                MenuPage.actualMenu.UpdateItems();
+
+                LoginBox.Text = "";
+                PasswordBox.Text = "";
+            }
         }
 
         private void LoginButton_Clicked(object sender, EventArgs e)
         {
-            LoginInfo.Text = "\nLogin: " + LoginBox.Text + "\nPassword: " + PasswordBox.Text;
+            LoginButton.IsEnabled = false;
 
-            username = LoginBox.Text;
-
-            loggedIn = true;
-
-            MenuPage.actualMenu.UpdateItems();
-
-            
+            Login(LoginBox.Text, PasswordBox.Text);
         }
     }
 }

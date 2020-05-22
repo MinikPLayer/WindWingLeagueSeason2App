@@ -28,8 +28,21 @@ namespace WindWingLeagueSeason2App.Views
             MenuPages.Add((int)MenuItemType.Login, (NavigationPage)Detail);
 
             networkData = new NetworkData();
+
+            
         }
 
+        public Page GetLoadedPage(MenuItemType type)
+        {
+            if(!MenuPages.ContainsKey((int)type))
+            {
+                return null;
+            }
+            return MenuPages[(int)type].CurrentPage;
+        }
+
+
+        public NavigationPage currentPage;
         public async Task NavigateFromMenu(int id)
         {
 
@@ -46,14 +59,17 @@ namespace WindWingLeagueSeason2App.Views
                     case (int)MenuItemType.Login:
                         MenuPages.Add(id, new NavigationPage(new LoginScreen()));
                         break;
+                    case (int)MenuItemType.Options:
+                        MenuPages.Add(id, new NavigationPage(new OptionsPage()));
+                        break;
                 }
             }
 
-            var newPage = MenuPages[id];
+            currentPage = MenuPages[id];
 
-            if (newPage != null && Detail != newPage)
+            if (currentPage != null && Detail != currentPage)
             {
-                Detail = newPage;
+                Detail = currentPage;
 
                 if (Device.RuntimePlatform == Device.Android)
                     await Task.Delay(100);

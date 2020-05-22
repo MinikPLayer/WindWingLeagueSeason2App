@@ -26,6 +26,23 @@ namespace WindWingLeagueSeason2App.Models
             }
         }
 
+        string _team;
+        public string team
+        {
+            get
+            {
+                return _team;
+            }
+            set
+            {
+                _team = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("name"));
+                }
+            }
+        }
+
         public string rawName
         {
             get
@@ -36,7 +53,7 @@ namespace WindWingLeagueSeason2App.Models
 
         string _name;
         public string name { 
-            get { return prefix + _name; } 
+            get { return prefix + _name + " [" + team + "]"; } 
             set
             {
                 _name = value;
@@ -82,10 +99,21 @@ namespace WindWingLeagueSeason2App.Models
         {
             get
             {
-                return highlighted ? (Color)Application.Current.Resources["NavigationPrimary"] : Color.White;
+                return highlighted ? (Color)Application.Current.Resources["DynamicNavigationPrimary"] : (Color)Application.Current.Resources["DynamicBackgroundColor"]; 
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public LeaderboardsEntry()
+        {
+            MessagingCenter.Subscribe<object>(this, "UpdateTheme", (sender) =>
+            {
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("color"));
+                }
+            });
+        }
     }
 }

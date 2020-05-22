@@ -17,6 +17,32 @@ namespace WindWingLeagueSeason2App.Views
 
         bool prefixesAdded = false;
 
+        class Team
+        {
+            public string name;
+            public string shortName;
+
+            public Team(string name, string shortName)
+            {
+                this.name = name;
+                this.shortName = shortName;
+            }
+        }
+
+        Team[] teams = new Team[] { new Team("Mercedes", "MER"), new Team("Ferrari", "FRI"), new Team("Red Bull", "RDB"), new Team("McLaren", "MCL"), new Team("Racing Point", "RPT"), new Team("Renault", "RNL"), new Team("Haas", "HAS"), new Team("Williams", "WIL"), new Team("Alfa Romeo", "ARO"), new Team("Toro Rosso", "TRS"), new Team("Other", "OTH") }; 
+
+        Team GetTeam(string name)
+        {
+            for(int i = 0;i<teams.Length;i++)
+            {
+                if(teams[i].shortName == name)
+                {
+                    return teams[i];
+                }
+            }
+            return null;
+        }
+
         public LeaderboardsPage()
         {
             InitializeComponent();
@@ -154,14 +180,14 @@ namespace WindWingLeagueSeason2App.Views
                 {
                     datas[i] = datas[i].Substring(1, datas[i].Length - 2);
                     string[] infos = datas[i].Split(',');
-                    if(infos.Length != 2)
+                    if(infos.Length < 3)
                     {
                         MainPage.log += "[ERROR] - {Parse Leaderboards Data}  Not enough info in data";
                         return;
                     }
 
                     //AddEntry(new Models.LeaderboardsEntry(infos[0], int.Parse(infos[1])));
-                    AddEntry(new Models.LeaderboardsEntry { name = infos[0], score = int.Parse(infos[1]) });
+                    AddEntry(new Models.LeaderboardsEntry { name = infos[0], score = int.Parse(infos[1]), team = GetTeam(infos[2]).name });
                 }
             }
             catch(Exception e)

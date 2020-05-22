@@ -7,7 +7,7 @@
              x:Class="WindWingLeagueSeason2App.Views.AboutPage"
              xmlns:vm="clr-namespace:WindWingLeagueSeason2App.ViewModels"
              Title="{Binding Title}">
-    
+
     <ContentPage.BindingContext>
         <vm:AboutViewModel />
     </ContentPage.BindingContext>
@@ -40,7 +40,7 @@
                             <FormattedString.Spans>
                                 <Span Text="Oficjalna aplikacja WindWing" FontAttributes="Bold" FontSize="22" />
                                 <Span Text=" " />
-                                <Span Text="0.1a" ForegroundColor="{StaticResource LightTextColor}" />
+                                <Span Text="0.2a" ForegroundColor="{DynamicResource DynamicSecondaryTextColor}" />
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>

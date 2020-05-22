@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="WindWingLeagueSeason2App.Views.LabeledSwitch"
+             x:Name="LabeledSwitchRoot">
+
+    <ContentView.GestureRecognizers>
+        <TapGestureRecognizer Tapped="OnTapped" />
+    </ContentView.GestureRecognizers>
+
+    <ContentView.Content>
+        <Grid InputTransparent="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackLayout Spacing="0"
+                         Grid.Row="0"
+                         VerticalOptions="Center">
+                <Label Padding="20, 0, 0, 0" FontSize="16" Text="{Binding Title, Source={x:Reference LabeledSwitchRoot}}"/>
+            </StackLayout>
+
+            <Switch Margin="0,5,20,0" IsToggled="{Binding IsChecked, Source={x:Reference LabeledSwitchRoot}, Mode=TwoWay}"
+                    VerticalOptions="Center"
+                    Grid.Column="1"/>
+        </Grid>
+    </ContentView.Content>
+
+</ContentView>
