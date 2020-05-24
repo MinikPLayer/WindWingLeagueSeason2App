@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using WindWingLeagueSeason2App;
+
 using WindWingLeagueSeason2App.Models;
 
 namespace WindWingLeagueSeason2App.Views
@@ -14,7 +16,9 @@ namespace WindWingLeagueSeason2App.Views
     [DesignTimeVisible(false)]
     public partial class MainPage : MasterDetailPage
     {
+        public static MainPage singleton;
         public static NetworkData networkData;
+        public static Config config;
         public static string log = "";
 
         Dictionary<int, NavigationPage> MenuPages = new Dictionary<int, NavigationPage>();
@@ -22,14 +26,20 @@ namespace WindWingLeagueSeason2App.Views
         {
             InitializeComponent();
 
+            singleton = this;
+            config = Config.Load();
+
+            ThemeManager.darkMode = config.darkMode;
+
             MasterBehavior = MasterBehavior.Popover;
 
             //MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
-            MenuPages.Add((int)MenuItemType.Login, (NavigationPage)Detail);
+            MenuPages.Add((int)MenuItemType.InitScreen, (NavigationPage)Detail);
 
-            networkData = new NetworkData();
+            networkData = new NetworkData("192.168.1.105", 8148);
+            //networkData = new NetworkData("minik.ml", 8148);
 
-            
+
         }
 
         public Page GetLoadedPage(MenuItemType type)
@@ -43,8 +53,13 @@ namespace WindWingLeagueSeason2App.Views
 
 
         public NavigationPage currentPage;
-        public async Task NavigateFromMenu(int id)
+        public async Task NavigateFromMenu(int id, int pageIdToClose = -1)
         {
+
+            if(pageIdToClose > 0)
+            {
+                MenuPages.Remove(pageIdToClose);
+            }
 
             if (!MenuPages.ContainsKey(id))
             {
@@ -58,6 +73,9 @@ namespace WindWingLeagueSeason2App.Views
                         break;
                     case (int)MenuItemType.Login:
                         MenuPages.Add(id, new NavigationPage(new LoginScreen()));
+                        break;
+                    case (int)MenuItemType.Register:
+                        MenuPages.Add(id, new NavigationPage(new RegisterPage()));
                         break;
                     case (int)MenuItemType.Options:
                         MenuPages.Add(id, new NavigationPage(new OptionsPage()));

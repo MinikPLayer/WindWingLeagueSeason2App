@@ -33,11 +33,18 @@ namespace WindWingLeagueSeason2App.Views
             }
         }
 
+        protected override void OnDisappearing()
+        {
+            Config.Save();
+        }
+
         private void DarkModeSwitch_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (initialized)
             {
                 ThemeManager.darkMode = DarkModeSwitch.IsChecked;
+
+                MainPage.config.darkMode = DarkModeSwitch.IsChecked;
             }
         }
     }

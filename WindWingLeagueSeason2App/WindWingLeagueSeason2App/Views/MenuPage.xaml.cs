@@ -61,10 +61,20 @@ namespace WindWingLeagueSeason2App.Views
             LogOutButton.IsVisible = LoginScreen.loggedIn;
         }
 
-        private void LogOutButton_Clicked(object sender, EventArgs e)
+        async void LogOutButton_ClickedAsync()
         {
             LoginScreen loginScreen = (LoginScreen)((MainPage)Application.Current.MainPage).GetLoadedPage(MenuItemType.Login);
+            if (loginScreen == null) // Login screen is not loaded
+            {
+                await MainPage.singleton.NavigateFromMenu((int)MenuItemType.Login);
+                loginScreen = (LoginScreen)((MainPage)Application.Current.MainPage).GetLoadedPage(MenuItemType.Login);
+            }
             loginScreen.LogOut();
+        }
+
+        private void LogOutButton_Clicked(object sender, EventArgs e)
+        {
+            LogOutButton_ClickedAsync();
         }
     }
 }

@@ -194,6 +194,8 @@ namespace WindWingLeagueSeason2App.Views
             {
                 MainPage.log += "[ERROR] " + e.ToString();
                 LogLabel.Text += e.ToString();
+
+                DisplayAlert("Blad pakietu", "Nie udalo sie przetworzyc pakietu rankingu, blad: \n " + e.ToString(), "OK");
             }
 
         }

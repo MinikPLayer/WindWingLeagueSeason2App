@@ -32,6 +32,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Picker Title="Sezon" x:Name="SeasonPicker" />
         <Button x:Name="LogOutButton" Text="Wyloguj sie" Clicked="LogOutButton_Clicked"/>
     </StackLayout>
 </ContentPage>

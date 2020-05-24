@@ -11,20 +11,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Network" Version="6.1.4.20" />
     <PackageReference Include="Xam.Plugin.Iconize" Version="3.5.0.129" />
     <PackageReference Include="Xamarin.Forms" Version="4.3.0.908675" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="NetworkCommsDotNetComplete">
-      <HintPath>F:\BibliotekiC#\NetworkCommsDotNet\NetworkCommsDotNetComplete.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
+    <Compile Update="Views\InitScreen.xaml.cs">
+      <DependentUpon>InitScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\OptionsPage.xaml.cs">
       <DependentUpon>OptionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\RegisterToSeasonPage.xaml.cs">
+      <DependentUpon>RegisterToSeasonPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>

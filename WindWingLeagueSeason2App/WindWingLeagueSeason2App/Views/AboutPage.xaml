@@ -40,7 +40,7 @@
                             <FormattedString.Spans>
                                 <Span Text="Oficjalna aplikacja WindWing" FontAttributes="Bold" FontSize="22" />
                                 <Span Text=" " />
-                                <Span Text="0.2a" ForegroundColor="{DynamicResource DynamicSecondaryTextColor}" />
+                                <Span Text="0.3a" ForegroundColor="{DynamicResource DynamicSecondaryTextColor}" />
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>

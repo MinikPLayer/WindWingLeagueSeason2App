@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="WindWingLeagueSeason2App.Views.LoginScreen"
+             x:Class="WindWingLeagueSeason2App.Views.InitScreen"
              xmlns:local="clr-namespace:WindWingLeagueSeason2App.Views"
              xmlns:vm="clr-namespace:WindWingLeagueSeason2App.ViewModels"
              Title="{Binding Title}">
@@ -24,18 +24,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackLayout VerticalOptions="CenterAndExpand">
-            <Label Text="Logowanie" FontSize="64" HorizontalOptions="Center" FontAttributes="Bold" />
-            <Entry x:Name="LoginBox" Placeholder="Login" VerticalOptions="Center" Margin="30,0,30,0"/>
-            <Entry x:Name="PasswordBox" Placeholder="Password" IsPassword="True" VerticalOptions="Center" Margin="30,0,30,0"/>
-            <local:LabeledSwitch Padding="30,0,30,0" x:Name="AutoLoginSwitch" Title="Automatyczne logowanie" />
-            <Button x:Name="LoginButton" Text="Login" HorizontalOptions="Center" Clicked="LoginButton_Clicked"/>
-            <Label x:Name="LoginInfo" Text="" FontSize="32" HorizontalOptions="Center"/>
-            <Button Clicked="RegisterButton_Clicked" x:Name="RegisterButton" Text="Rejestracja" HorizontalOptions="Center" VerticalOptions="End" />
-        </StackLayout>
-        
+        <Label x:Name="LoginText" HorizontalOptions="Center" VerticalOptions="Center" Text="Logowanie..." FontSize="32" Grid.Column="0" Grid.Row="1" />
+
     </Grid>
     
 </ContentPage>
