@@ -21,6 +21,9 @@
     <Compile Update="Views\InitScreen.xaml.cs">
       <DependentUpon>InitScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Admin\SeasonsPage.xaml.cs">
+      <DependentUpon>SeasonsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\OptionsPage.xaml.cs">
       <DependentUpon>OptionsPage.xaml</DependentUpon>
     </Compile>
@@ -32,6 +35,9 @@
     </Compile>
     <Compile Update="Views\LoginScreen.xaml.cs">
       <DependentUpon>LoginScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SeasonsScreen.xaml.cs">
+      <DependentUpon>SeasonsScreen.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

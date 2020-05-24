@@ -11,7 +11,9 @@ namespace WindWingLeagueSeason2App.Models
         Leaderboards,
         Options,
         Register,
-        About
+        About,
+        ADMIN_Users,
+        ADMIN_Seasons,
     }
     public class HomeMenuItem
     {
@@ -19,4 +21,5 @@ namespace WindWingLeagueSeason2App.Models
 
         public string Title { get; set; }
     }
+
 }

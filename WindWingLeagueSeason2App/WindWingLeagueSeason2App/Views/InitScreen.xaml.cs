@@ -36,7 +36,7 @@ namespace WindWingLeagueSeason2App.Views
                 }
                 LoginText.Text = text;
                 counter = (counter + 1) % 4;
-                await Task.Delay(250);
+                await Task.Delay(1000);
             }
         }
 
@@ -72,11 +72,19 @@ namespace WindWingLeagueSeason2App.Views
 
                 LoginScreen.loggedIn = true;
 
+                if (datas.Length > 2)
+                {
+                    Debug.Log("Admin string: " + datas[2]);
+                    if (datas[2] == "True")
+                    {
+                        LoginScreen.admin = true;
+                    }
+                }
                 MenuPage.actualMenu.UpdateItems();
             }
             else
             {
-                if(datas[0] == "NC") // Not connected, try again
+                if(datas[0].Length == 0 || datas[0] == "NC") // Not connected or bad packet, try again
                 {
                     LoginT(login, token);
                     return;
@@ -87,7 +95,7 @@ namespace WindWingLeagueSeason2App.Views
                 }
                 else
                 {
-                    LoginScreen.loginError = "Unknown login error";
+                    LoginScreen.loginError = "Nieznany błąd logowania: " + datas[0];
                 }
 
                 MainPage.singleton.NavigateFromMenu((int)Models.MenuItemType.Login, (int)Models.MenuItemType.InitScreen);

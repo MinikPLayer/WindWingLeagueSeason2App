@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Threading.Tasks;
 
 namespace WindWingLeagueSeason2App.Views
 {
@@ -25,7 +26,7 @@ namespace WindWingLeagueSeason2App.Views
             actualMenu = this;
         }
 
-        public void UpdateItems()
+        public void UpdateItems(bool updateSeasons = true)
         {
             if(LoginScreen.loggedIn)
             {
@@ -45,6 +46,11 @@ namespace WindWingLeagueSeason2App.Views
                     new HomeMenuItem {Id = MenuItemType.Options, Title="Opcje" }
                 };
             }
+            if(LoginScreen.admin)
+            {
+                menuItems.Add(new HomeMenuItem { Id = MenuItemType.ADMIN_Seasons, Title = "[Sezony]" });
+            }
+
             ListViewMenu.ItemsSource = menuItems;
 
             ListViewMenu.SelectedItem = menuItems[0];
@@ -58,7 +64,32 @@ namespace WindWingLeagueSeason2App.Views
                 await RootPage.NavigateFromMenu(id);
             };
 
+            if (updateSeasons)
+            {
+                UpdateSeasons();
+            }
+
+
             LogOutButton.IsVisible = LoginScreen.loggedIn;
+        }
+
+        public async Task UpdateSeasons(bool force = false)
+        {
+            if (MainPage.networkData == null) return;
+
+            if(SeasonsScreen.seasons == null || force)
+            {
+                await SeasonsScreen.GetSeasons();
+            }
+
+            SeasonPicker.Items.Clear();
+
+            for (int i = 0; i < SeasonsScreen.seasons.Count; i++)
+            {
+                SeasonPicker.Items.Add("Sezon " + SeasonsScreen.seasons[i].id.ToString());
+            }
+
+            SeasonPicker.SelectedItem = SeasonsScreen.seasonSelected;
         }
 
         async void LogOutButton_ClickedAsync()
@@ -75,6 +106,11 @@ namespace WindWingLeagueSeason2App.Views
         private void LogOutButton_Clicked(object sender, EventArgs e)
         {
             LogOutButton_ClickedAsync();
+        }
+
+        private void SeasonPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SeasonsScreen.SelectSeason(SeasonPicker.SelectedIndex);
         }
     }
 }

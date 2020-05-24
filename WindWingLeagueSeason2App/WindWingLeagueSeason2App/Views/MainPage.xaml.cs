@@ -42,6 +42,17 @@ namespace WindWingLeagueSeason2App.Views
 
         }
 
+        public void CloseAllPages()
+        {
+            foreach (KeyValuePair<int, NavigationPage> entry in MenuPages)
+            {
+                if(entry.Value != Detail)
+                {
+                    MenuPages.Remove(entry.Key);
+                }
+            }
+        }
+
         public Page GetLoadedPage(MenuItemType type)
         {
             if(!MenuPages.ContainsKey((int)type))
@@ -80,6 +91,11 @@ namespace WindWingLeagueSeason2App.Views
                     case (int)MenuItemType.Options:
                         MenuPages.Add(id, new NavigationPage(new OptionsPage()));
                         break;
+                    case (int)MenuItemType.ADMIN_Seasons:
+                        MenuPages.Add(id, new NavigationPage(new Admin.SeasonsPage()));
+                        return;
+                    case (int)MenuItemType.ADMIN_Users:
+                        return;
                 }
             }
 

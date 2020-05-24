@@ -7,8 +7,6 @@ using Network;
 using Network.Converter;
 using Network.Packets;
 
-using NetworkRequests;
-
 namespace WindWingLeagueSeason2App
 {
     public class NetworkData
@@ -87,7 +85,11 @@ namespace WindWingLeagueSeason2App
             string rest = "";
             for(int i = 1;i<data.Length;i++)
             {
-                rest += data[i] + ';';
+                rest += data[i];
+                if(i != data.Length - 1)
+                {
+                    rest += ';';
+                }
             }
 
             if (data.Length == 0)

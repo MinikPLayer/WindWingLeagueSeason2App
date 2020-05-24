@@ -15,6 +15,7 @@ namespace WindWingLeagueSeason2App.Views
     {
         public static string username;
         public static bool loggedIn = false;
+        public static bool admin = false;
 
         public static string loginError = "";
 
@@ -103,6 +104,14 @@ namespace WindWingLeagueSeason2App.Views
                         MainPage.config.autoLoginToken = datas[2].Replace("\\:", ";");
 
                         Config.Save();
+                    }
+                    if(datas.Length > 3)
+                    {
+                        if(datas[3] == "True")
+                        {
+                            
+                            admin = true;
+                        }
                     }
                 }
 

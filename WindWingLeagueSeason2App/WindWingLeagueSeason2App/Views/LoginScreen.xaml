@@ -32,7 +32,7 @@
             <Entry x:Name="PasswordBox" Placeholder="Password" IsPassword="True" VerticalOptions="Center" Margin="30,0,30,0"/>
             <local:LabeledSwitch Padding="30,0,30,0" x:Name="AutoLoginSwitch" Title="Automatyczne logowanie" />
             <Button x:Name="LoginButton" Text="Login" HorizontalOptions="Center" Clicked="LoginButton_Clicked"/>
-            <Label x:Name="LoginInfo" Text="" FontSize="32" HorizontalOptions="Center"/>
+            <Label x:Name="LoginInfo" Text="" FontSize="16" HorizontalOptions="Center"/>
             <Button Clicked="RegisterButton_Clicked" x:Name="RegisterButton" Text="Rejestracja" HorizontalOptions="Center" VerticalOptions="End" />
         </StackLayout>
         
