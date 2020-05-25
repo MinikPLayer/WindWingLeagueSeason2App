@@ -56,13 +56,29 @@ namespace WindWingLeagueSeason2App.Views
             //AddEntry(new Models.LeaderboardsEntry { name = "Test", score = 30 });
             //AddEntry(new Models.LeaderboardsEntry { name = "Test2", score = 60 });
 
+            
+        }
+
+        protected override void OnAppearing()
+        {
+            entries.Clear();
+
             UpdateLeaderboards();
         }
 
         async Task UpdateLeaderboards()
         {
             //string data = await MainPage.networkData.RequestAsync("Leaderboards");
-            string data = await MainPage.networkData.RequestAsync("Leaderboards");
+            while(SeasonsScreen.seasonSelected == null)
+            {
+                //await DisplayAlert("OK", "Season Selected is null, Updating", "OK");
+                //await MenuPage.actualMenu.UpdateSeasons(true);
+                await Task.Delay(100);
+            }
+
+            string data = await MainPage.networkData.RequestAsync("Leaderboards;" + SeasonsScreen.seasonSelected.id.ToString());
+
+            Debug.Log("Leaderboards response: " + data);
 
             ParseData(data);
 
@@ -152,6 +168,12 @@ namespace WindWingLeagueSeason2App.Views
         {
             try
             {
+                if(data == "NS")
+                {
+                    AddEntry(new Models.LeaderboardsEntry { name = "Brak danych" });
+                    return;
+                }
+
                 string numStr = "";
                 for (int i = 0; i < data.Length; i++)
                 {

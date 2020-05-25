@@ -27,6 +27,9 @@
     <Compile Update="Views\OptionsPage.xaml.cs">
       <DependentUpon>OptionsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\UserRegisteredPage.xaml.cs">
+      <DependentUpon>UserRegisteredPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\RegisterToSeasonPage.xaml.cs">
       <DependentUpon>RegisterToSeasonPage.xaml</DependentUpon>
     </Compile>

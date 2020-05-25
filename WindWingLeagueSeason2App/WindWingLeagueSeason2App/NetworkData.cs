@@ -36,13 +36,13 @@ namespace WindWingLeagueSeason2App
 
         async Task<string> SendAndGetResponse(string key, string data)
         {
-            Debug.Log("Waiting for response... Connected: " + connected.ToString());
+            //Debug.Log("Waiting for response... Connected: " + connected.ToString());
             if(!connected || !connection.IsAlive)
             {
                 return await ConnectionError();
             }
 
-            Debug.Log("Registering data handler");
+            //Debug.Log("Registering data handler");
 
             bool ready = false;
             string response = "";
@@ -52,11 +52,12 @@ namespace WindWingLeagueSeason2App
                 response = RawDataConverter.ToUTF16_LittleEndian_String(rawData);
             });
 
-            Debug.Log("Registered data handler");
-            
+            //Debug.Log("Registered data handler\nSending data with key: \"" + key + "\" and data: \"" + data + "\"");
+
+            Debug.Log("Sending \"" + key + "\" and data: \"" + data + "\"");
             connection.SendRawData(RawDataConverter.FromUTF16_LittleEndian_String(key, data));
 
-            Debug.Log("Sent");
+            //Debug.Log("Sent");
 
             const int delay = 10;
 
@@ -97,7 +98,7 @@ namespace WindWingLeagueSeason2App
                 return "EC";
             }
 
-            switch (data[0])
+            /*switch (data[0])
             {
                 case "Leaderboards":
                     return await SendAndGetResponse("Leaderboards", rest);
@@ -113,7 +114,9 @@ namespace WindWingLeagueSeason2App
 
                 default:
                     return await SendAndGetResponse(data[0], rest);
-            }
+            }*/
+
+            return await SendAndGetResponse(data[0], rest);
 
 
         }
@@ -138,6 +141,7 @@ namespace WindWingLeagueSeason2App
         {
             if (connected) return;
             connection = ConnectionFactory.CreateTcpConnection(ip, port, out ConnectionResult connectionResult);
+
             if (connectionResult != ConnectionResult.Connected)
             {
                 Debug.Log("[ERROR] Connection error: " + connectionResult);

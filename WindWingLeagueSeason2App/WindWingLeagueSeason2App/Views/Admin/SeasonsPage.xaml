@@ -13,16 +13,19 @@
         <vm:AboutViewModel />
     </ContentPage.BindingContext>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Label x:Name="SeasonName" Text="Sezon ?" HorizontalOptions="Center" FontSize="32" Grid.Row="0"/>
-        <StackLayout VerticalOptions="CenterAndExpand" Grid.Row="5">
-            <Button VerticalOptions="End" x:Name="AddSeasonButton" Text="Dodaj" Clicked="AddSeasonButton_Clicked" />
-        </StackLayout>
-        
-    </Grid>
-    
+    <StackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="PrevSeasonButton" Text="&lt;" Grid.Column="0" Clicked="PrevSeasonButton_Clicked" />
+            <Button x:Name="NextSeasonButton" Text="&gt;" Grid.Column="1" Clicked="NextSeasonButton_Clicked" />
+        </Grid>
+        <Label x:Name="SeasonName" Text="Sezon ?" HorizontalOptions="Center" FontSize="32"/>
+        <Button VerticalOptions="End" x:Name="SaveButton" Text="Zapisz" Clicked="SaveButton_Clicked" />
+        <Button VerticalOptions="End" x:Name="AddSeasonButton" Text="Dodaj nowy sezon" Clicked="AddSeasonButton_Clicked" />
+    </StackLayout>
+
 </ContentPage>

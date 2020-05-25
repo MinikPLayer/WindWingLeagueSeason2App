@@ -7,24 +7,25 @@
              x:Class="WindWingLeagueSeason2App.Views.RegisterToSeasonPage">
     <ContentPage.Content>
         <StackLayout VerticalOptions="StartAndExpand">
-
             <Label Text="Rejestracja" FontSize="64" HorizontalOptions="Center"/>
             <Label x:Name="SeasonName" HorizontalOptions="Center" Text="" FontSize="32" TextColor="{DynamicResource DynamicSecondaryTextColor}"/>
-            <Entry Placeholder="Login" x:Name="LoginEntryBox" Margin="30,0,30,0" />
-            <Entry Placeholder="Hasło" x:Name="PasswordEntryBox" Margin="30,0,30,0" />
-            <Entry Placeholder="Link do profilu Steam" x:Name="SteamLinkEntryBox" Margin="30,0,30,0" />
-            <!--<Grid>
+            <Label x:Name="RegistrationTrack" HorizontalOptions="Center" Text="" FontSize="32" TextColor="{DynamicResource DynamicSecondaryTextColor}"/>
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Entry Placeholder="Czas sucho" x:Name="BestLapDryBox" Margin="30,0,0,0" Grid.Column="0" />
-                <Entry Placeholder="Link" x:Name="BestLapDryLink" Grid.Column="1" Margin="0,0,30,0"/>
-                <Entry Placeholder="Czas mokro" x:Name="BestLapWetBox" Margin="30,0,0,0" Grid.Column="0" Grid.Row="1" />
-                <Entry Placeholder="Link" x:Name="BestLapWetLink" Grid.Row="1" Grid.Column="1" Margin="0,0,30,0"/>
-            </Grid>-->
-            
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
+                <Entry Placeholder="Czas sucho" x:Name="DryTimeBox" Text="" Margin="30,0,15,0" Grid.Row="0" Grid.Column="0" />
+                <Entry Placeholder="Link" x:Name="DryLinkBox" Text="" Margin="15,0,30,0" Grid.Row="0" Grid.Column="1" />
+                <Entry Placeholder="Czas mokro" x:Name="WetTimeBox" Text="" Margin="30,0,15,0" Grid.Row="1" Grid.Column="0" />
+                <Entry Placeholder="Link" x:Name="WetLinkBox" Text="" Margin="15,0,30,0" Grid.Row="1" Grid.Column="1" />
+
+            </Grid>
+            <Button HorizontalOptions="Center" x:Name="RegisterButton" Text="Zarejestruj się" Clicked="RegisterButton_Clicked" />
             <Label x:Name="LogLabel" Text=""/>
             <Label Text="" />
             <!--<Button Text="Add New" Clicked="Button_Clicked"/>-->

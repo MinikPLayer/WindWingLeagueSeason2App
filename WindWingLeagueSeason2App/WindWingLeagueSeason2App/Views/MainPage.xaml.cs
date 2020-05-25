@@ -8,6 +8,7 @@ using Xamarin.Forms.Xaml;
 using WindWingLeagueSeason2App;
 
 using WindWingLeagueSeason2App.Models;
+using System.Threading;
 
 namespace WindWingLeagueSeason2App.Views
 {
@@ -90,6 +91,12 @@ namespace WindWingLeagueSeason2App.Views
                         break;
                     case (int)MenuItemType.Options:
                         MenuPages.Add(id, new NavigationPage(new OptionsPage()));
+                        break;
+                    case (int)MenuItemType.RegisterToSeason:
+                        MenuPages.Add(id, new NavigationPage(new RegisterToSeasonPage()));
+                        break;
+                    case (int)MenuItemType.RegisteredToSeason:
+                        MenuPages.Add(id, new NavigationPage(new UserRegisteredPage()));
                         break;
                     case (int)MenuItemType.ADMIN_Seasons:
                         MenuPages.Add(id, new NavigationPage(new Admin.SeasonsPage()));

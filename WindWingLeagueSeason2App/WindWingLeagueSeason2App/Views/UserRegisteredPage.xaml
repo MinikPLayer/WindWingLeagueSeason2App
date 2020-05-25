@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="WindWingLeagueSeason2App.Views.UserRegisteredPage">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="StartAndExpand">
+            <Label Text="Zarejestrowano" FontSize="48" HorizontalOptions="Center" />
+            <Label x:Name="SeasonName" HorizontalOptions="Center" Text="" FontSize="32" TextColor="{DynamicResource DynamicSecondaryTextColor}"/>
+            <Label HorizontalOptions="Center" Text="Pierwszy wyścig:" FontSize="24" TextColor="{DynamicResource DynamicSecondaryTextColor}"/>
+            <Label HorizontalOptions="Center" x:Name="FirstRaceLocation" FontSize="28" />
+            <Label HorizontalOptions="Center" x:Name="FirstRaceDate" FontSize="20" TextColor="{DynamicResource DynamicSecondaryTextColor}" />
+            <Label x:Name="LogLabel" Text=""/>
+            <Label Text="" />
+            <!--<Button Text="Add New" Clicked="Button_Clicked"/>-->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

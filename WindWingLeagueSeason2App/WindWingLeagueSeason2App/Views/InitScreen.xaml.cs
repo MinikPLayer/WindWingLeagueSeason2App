@@ -20,8 +20,6 @@ namespace WindWingLeagueSeason2App.Views
             InitializeComponent();
 
             Title = "Login";
-
-            
         }
 
         async Task AnimateLoginText()

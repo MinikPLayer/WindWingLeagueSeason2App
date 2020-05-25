@@ -22,43 +22,93 @@ namespace WindWingLeagueSeason2App.Views
             Title = "Rejestracja";
 
             BindingContext = this;
-
-            GetRegistrationData();
         }
 
-        async void GetRegistrationData()
+        protected override void OnAppearing()
         {
-            string data = await MainPage.networkData.RequestAsync("RD"); // Registration data
+            SeasonName.Text = "Sezon " + SeasonsScreen.seasonSelected.id;
+            RegistrationTrack.Text = "Tor: " + SeasonsScreen.seasonSelected.registrationTrack.country;
+        }
 
+        async void RegisterToSeason(TimeSpan lapDry, TimeSpan lapWet, string dryLink, string wetLink)
+        {
+            string response = await MainPage.networkData.RequestAsync("RegisterSeason;" + SeasonsScreen.seasonSelected.id.ToString() + ";" + lapDry.ToString() + ";" + lapWet.ToString() + ";" + dryLink + ";" + wetLink);
+
+            if (response == "OK")
+            {
+                DisplayAlert("Zarejestrowano", "Zarejestrowano pomyślnie do sezonu", "OK");
+
+                MainPage.singleton.NavigateFromMenu((int)Models.MenuItemType.RegisteredToSeason, (int)Models.MenuItemType.RegisterToSeason);
+
+                MenuPage.actualMenu.UpdateItems();
+            }
+            else
+            {
+                string[] data = response.Split(';');
+                if (data.Length > 1)
+                {
+                    DisplayAlert("Błąd rejestracji", data[1], "OK");
+                }
+                else
+                {
+                    DisplayAlert("Błąd rejestracji", data[0], "OK");
+                }
+            }
+        }
+
+        bool ParseTime(string str, out TimeSpan time)
+        {
             try
             {
-                int count = 0;
-                for (int i = 0; i < data.Length; i++)
+                char splitChar = ':';
+                if (str.Contains('.'))
                 {
-                    if (data[i] == '{')
-                    {
-                        count = int.Parse(data.Substring(0, i));
-                        Debug.Log("Count: " + count);
-                        
-                    }
+                    splitChar = '.';
                 }
 
-                if(count == 0)
+                string[] data = str.Split(splitChar);
+                if (data.Length != 3)
                 {
-                    await DisplayAlert("Brak otwartej rejestracji", "Aktualnie brak otwartych sezonów do rejestracji", "OK");
-                    await MainPage.singleton.NavigateFromMenu((int)Models.MenuItemType.Login, (int)Models.MenuItemType.Register);
+                    Debug.LogError("Error parsing time, bad data count");
+                    return false;
                 }
+
+                while(data[2].Length < 3)
+                {
+                    data[2] += "0";
+                }
+
+                Debug.Log("Minutes: " + data[0] + ", seconds: " + data[1] + ", miliseconds: " + data[2]);
+
+                time = new TimeSpan(0, 0, int.Parse(data[0]), int.Parse(data[1]), int.Parse(data[2]));
+                return true;
+            }
+            catch(FormatException e)
+            {
+                Debug.LogError("[RegisterToSeasonPage.ParseTime] Error parsing time: error parsing numbers");
+                return false;
             }
             catch(Exception e)
             {
-                if(await DisplayAlert("Coś poszło nie tak", "Błąd przetwarzania danych z servera: " + e.Message, "Więcej informacji", "OK"))
-                {
-                    await DisplayAlert("Więcej informacji", e.ToString(), "OK");
-                }
-
-                await MainPage.singleton.NavigateFromMenu((int)Models.MenuItemType.Login, (int)Models.MenuItemType.Register);
+                Debug.Exception(e, "[RegisterToSeasonPage.ParseTime]");
+                return false;
             }
         }
 
+        private void RegisterButton_Clicked(object sender, EventArgs e)
+        {
+            if (!ParseTime(DryTimeBox.Text, out TimeSpan dryTime))
+            {
+                DisplayAlert("Błąd", "Błędny format czasu na suchym torze\nPoprawny format: MM:SS:MSS [np. 1:23:456] lub MM.SS.MSS [np.1.23.456]", "OK");
+                return;
+            }
+
+            if (!ParseTime(WetTimeBox.Text, out TimeSpan wetTime))
+            {
+                DisplayAlert("Błąd", "Błędny format czasu na mokrym torze\nPoprawny format: MM:SS:MSS [np. 1:23:456] lub MM.SS.MSS [np.1.23.456]", "OK");
+                return;
+            }
+            RegisterToSeason(dryTime, wetTime, DryLinkBox.Text, WetLinkBox.Text);
+        }
     }
 }

@@ -11,6 +11,8 @@ namespace WindWingLeagueSeason2App.Models
         Leaderboards,
         Options,
         Register,
+        RegisterToSeason,
+        RegisteredToSeason,
         About,
         ADMIN_Users,
         ADMIN_Seasons,

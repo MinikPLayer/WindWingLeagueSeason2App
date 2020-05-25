@@ -15,6 +15,11 @@ namespace WindWingLeagueSeason2App.Views
     {
         public static MenuPage actualMenu;
 
+        public Picker _SeasonPicker
+        {
+            get { return SeasonPicker; }
+        }
+
         MainPage RootPage { get => Application.Current.MainPage as MainPage; }
         List<HomeMenuItem> menuItems;
         public MenuPage()
@@ -26,22 +31,44 @@ namespace WindWingLeagueSeason2App.Views
             actualMenu = this;
         }
 
-        public void UpdateItems(bool updateSeasons = true)
+        public async void UpdateItems(bool updateSeasons = true)
         {
-            if(LoginScreen.loggedIn)
+            BindingContext = this;
+
+            if (updateSeasons)
             {
-                menuItems = new List<HomeMenuItem>
+                await UpdateSeasons(true);
+            }
+
+            if (LoginScreen.loggedIn)
+            {
+                menuItems = new List<HomeMenuItem>();
+
+                if (SeasonsScreen.seasonSelected.registrationData.opened)
                 {
-                    new HomeMenuItem{Id = MenuItemType.Leaderboards, Title = "Ranking"},
-                    new HomeMenuItem {Id = MenuItemType.About, Title="O lidze" },
-                    new HomeMenuItem {Id = MenuItemType.Options, Title="Opcje" }
-                };
+                    if (SeasonsScreen.seasonSelected.userRegistered)
+                    {
+                        menuItems.Add(new HomeMenuItem { Id = MenuItemType.RegisteredToSeason, Title = "Nadchodzący sezon" });
+                    }
+                    else
+                    {
+                        menuItems.Add(new HomeMenuItem { Id = MenuItemType.RegisterToSeason, Title = "Rejestracja" });
+                    }
+                    
+                }
+                else
+                {
+                    menuItems.Add(new HomeMenuItem { Id = MenuItemType.Leaderboards, Title = "Ranking" });
+                }
+
+                menuItems.Add(new HomeMenuItem { Id = MenuItemType.About, Title = "O lidze" });
+                menuItems.Add(new HomeMenuItem { Id = MenuItemType.Options, Title = "Opcje" });
             }
             else
             {
                 menuItems = new List<HomeMenuItem>
                 {
-                    new HomeMenuItem{Id = MenuItemType.Login, Title="Login"},
+                    new HomeMenuItem{Id = MenuItemType.Login, Title="Logowanie"},
                     new HomeMenuItem {Id = MenuItemType.About, Title="O lidze" },
                     new HomeMenuItem {Id = MenuItemType.Options, Title="Opcje" }
                 };
@@ -64,22 +91,29 @@ namespace WindWingLeagueSeason2App.Views
                 await RootPage.NavigateFromMenu(id);
             };
 
-            if (updateSeasons)
-            {
-                UpdateSeasons();
-            }
+
 
 
             LogOutButton.IsVisible = LoginScreen.loggedIn;
         }
 
-        public async Task UpdateSeasons(bool force = false)
+        public async Task UpdateSeasons(bool force = false, bool keepSeason = true)
         {
             if (MainPage.networkData == null) return;
 
+            int idSelected = -1;
+
             if(SeasonsScreen.seasons == null || force)
             {
+                if(SeasonsScreen.seasons != null)
+                {
+                    idSelected = SeasonsScreen.seasonSelected.id;
+                }
                 await SeasonsScreen.GetSeasons();
+            }
+            else
+            {
+                idSelected = SeasonsScreen.seasonSelected.id;
             }
 
             SeasonPicker.Items.Clear();
@@ -89,7 +123,35 @@ namespace WindWingLeagueSeason2App.Views
                 SeasonPicker.Items.Add("Sezon " + SeasonsScreen.seasons[i].id.ToString());
             }
 
-            SeasonPicker.SelectedItem = SeasonsScreen.seasonSelected;
+            if(idSelected != -1 && keepSeason)
+            {
+                for(int i = 0;i<SeasonsScreen.seasons.Count;i++)
+                {
+                    if(SeasonsScreen.seasons[i].id == idSelected)
+                    {
+                        SeasonsScreen.seasonSelected = SeasonsScreen.seasons[i];
+                        SeasonPicker.SelectedIndex = SeasonsScreen.seasonSelected.id;
+                        break;
+                    }
+                }
+            }
+            else if(keepSeason)
+            {
+                for (int i = 0; i < SeasonsScreen.seasons.Count; i++)
+                {
+                    if (SeasonsScreen.seasons[i] == SeasonsScreen.seasonSelected)
+                    {
+                        SeasonPicker.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            //SeasonPicker.SelectedItem = SeasonsScreen.seasonSelected;
+
+            //SeasonPicker.
+
+
         }
 
         async void LogOutButton_ClickedAsync()
