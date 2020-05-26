@@ -50,7 +50,6 @@ namespace WindWingLeagueSeason2App.Views
             MainPage.singleton.CloseAllPages();
         }
 
-        // TO DO
         public static async Task GetSeasons()
         {
             try
@@ -81,6 +80,11 @@ namespace WindWingLeagueSeason2App.Views
                     seasons.Add(season);
                 }
 
+                if(seasons.Count == 0)
+                {
+                    await MainPage.singleton.DisplayAlert("Błąd", "Nie znaleziono żadnego sezonu", "Wyjdź");
+                    Environment.Exit(-1);
+                }
                 seasonSelected = seasons[0];
             }
             catch(Exception e)

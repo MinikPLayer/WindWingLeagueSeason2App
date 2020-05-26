@@ -74,6 +74,18 @@ namespace WindWingLeagueSeason2App.Views
                 DisplayAlert("Uzupełnij wszystkie pola", "Pole steam link musi być uzupełnione", "OK");
                 return;
             }
+            if(PasswordRepeatEntryBox.Text == null || PasswordRepeatEntryBox.Text.Length == 0)
+            {
+                DisplayAlert("Uzupełnij wszystkie pola", "Dla potwierdzenia wpisz hasło 2 razy", "OK");
+                return;
+            }
+
+            if(PasswordRepeatEntryBox.Text != PasswordEntryBox.Text)
+            {
+                DisplayAlert("Błąd haseł", "Hasła nie są identyczne", "OK");
+                return;
+            }
+
             Register(LoginEntryBox.Text, PasswordEntryBox.Text, EmailEntryBox.Text, SteamLinkEntryBox.Text);
         }
     }

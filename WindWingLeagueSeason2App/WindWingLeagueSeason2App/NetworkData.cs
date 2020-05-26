@@ -25,12 +25,12 @@ namespace WindWingLeagueSeason2App
             if (!value)
             {
                 Environment.Exit(1);
-                return "NC";
+                return "NC;Brak połączenia";
             }
             else
             {
                 Connect();
-                return "NC";
+                return "NC;Brak połączenia";
             }
         }
 
@@ -95,7 +95,7 @@ namespace WindWingLeagueSeason2App
 
             if (data.Length == 0)
             {
-                return "EC";
+                return "EC;Pusty pakiet";
             }
 
             /*switch (data[0])

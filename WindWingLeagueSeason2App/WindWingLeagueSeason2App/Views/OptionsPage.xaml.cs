@@ -27,10 +27,10 @@ namespace WindWingLeagueSeason2App.Views
             initialized = true;
             DarkModeSwitch.IsChecked = ThemeManager.darkMode;
 
-            if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LOG.txt")))
+            /*if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LOG.txt")))
             {
                 LogLabel.Text = File.ReadAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LOG.txt"));
-            }
+            }*/
         }
 
         protected override void OnDisappearing()

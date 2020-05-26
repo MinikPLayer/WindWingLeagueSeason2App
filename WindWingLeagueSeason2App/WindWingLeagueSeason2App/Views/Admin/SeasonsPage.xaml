@@ -5,26 +5,105 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="WindWingLeagueSeason2App.Views.Admin.SeasonsPage"
-             xmlns:local="clr-namespace:WindWingLeagueSeason2App.Views"
+             xmlns:local="clr-namespace:WindWingLeagueSeason2App.Views.Admin"
              xmlns:vm="clr-namespace:WindWingLeagueSeason2App.ViewModels"
              Title="{Binding Title}">
-
-    <ContentPage.BindingContext>
-        <vm:AboutViewModel />
-    </ContentPage.BindingContext>
 
     <StackLayout>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="PrevSeasonButton" Text="&lt;" Grid.Column="0" Clicked="PrevSeasonButton_Clicked" />
-            <Button x:Name="NextSeasonButton" Text="&gt;" Grid.Column="1" Clicked="NextSeasonButton_Clicked" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+            </Grid.RowDefinitions>
+
+            <Button x:Name="PrevSeasonButton" Text="&lt;" Grid.Column="0" Clicked="PrevSeasonButton_Clicked" Grid.Row="0" />
+            <Label x:Name="SeasonName" Text="Sezon ?" HorizontalOptions="Center" FontSize="32" Grid.Column="1"/>
+            <Button x:Name="NextSeasonButton" Text="&gt;" Grid.Column="2" Clicked="NextSeasonButton_Clicked" Grid.Row="0" />
         </Grid>
-        <Label x:Name="SeasonName" Text="Sezon ?" HorizontalOptions="Center" FontSize="32"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Text="Wyścigi" HorizontalOptions="Center" FontSize="18"  Grid.Column="0" />
+            <Label Text="Kierowcy" HorizontalOptions="Center" FontSize="18" Grid.Column="1" />
+            <ListView x:Name="RacesListView" Grid.Column="0" Grid.Row="1"
+                      ItemsSource="{Binding races}"
+                      IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                      ItemSelected="RacesListView_ItemSelected"
+                      RowHeight="48">
+                <d:ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Australia</x:String>
+                        <x:String>Bahrain</x:String>
+                    </x:Array>
+                </d:ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10,0,0,0"
+                                         BackgroundColor="{Binding color}">
+                                <Label Text="{Binding name}"
+                                       FontSize="16"/>
+                                <Label Text="{Binding date, StringFormat='Data: {0:dd.MM.yyyy HH:mm}'}"
+                                       d:Text="{Binding .}"
+                                       FontSize= "13"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ListView x:Name="DriversListView" Grid.Column="1" Grid.Row="1"
+                      ItemsSource="{Binding drivers}"
+                      IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                      ItemSelected="DriversListView_ItemSelected"
+                      RowHeight="48">
+                <d:ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Minik</x:String>
+                        <x:String>Yomo</x:String>
+                    </x:Array>
+                </d:ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10,0,0,0"
+                                         BackgroundColor="{Binding color}">
+                                <Label Text="{Binding name}"
+                                       d:Text="{Binding .}"
+                                       FontSize="16"/>
+                                <Label Text="{Binding points, StringFormat='Punkty: {0:F0}'}"
+                                       d:Text="{Binding .}"
+                                       FontSize= "13"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Usuń" x:Name="DeleteRaceButton" Grid.Row="2" Grid.Column="0" Clicked="DeleteRaceButton_Clicked" />
+            <Button Text="Usuń" x:Name="DeleteDriverButton" Grid.Row="2" Grid.Column="1" Clicked="DeleteDriverButton_Clicked" />
+            <Button Text="Zmień" x:Name="ChangeRaceButton" Grid.Row="3" Grid.Column="0" Clicked="ChangeRaceButton_Clicked" />
+            <Button Text="Dodaj" x:Name="AddRaceButton" Grid.Row="4" Grid.Column="0" Clicked="AddRaceButton_Clicked" />
+            <Picker Title="Tor" x:Name="RaceTrackPicker" Grid.Row="5" Grid.Column="0" ItemsSource="{Binding tracks}"/>
+            <DatePicker x:Name="RaceDatePicker" Grid.Row="6" Grid.Column="0" />
+
+        </Grid>
+        
         <Button VerticalOptions="End" x:Name="SaveButton" Text="Zapisz" Clicked="SaveButton_Clicked" />
+        <Button VerticalOptions="End" x:Name="DeleteSeasonButton" Text="Usuń ten sezon" Clicked="DeleteSeasonButton_Clicked" />
         <Button VerticalOptions="End" x:Name="AddSeasonButton" Text="Dodaj nowy sezon" Clicked="AddSeasonButton_Clicked" />
     </StackLayout>
 

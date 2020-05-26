@@ -24,10 +24,12 @@
                 <Entry Placeholder="Login" x:Name="LoginEntryBox" Margin="15,0,30,0" Grid.Column="1" Grid.Row="0"/>
                 <Label HorizontalOptions="Center" Text="Hasło: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="1"/>
                 <Entry IsPassword="True" Placeholder="Hasło" x:Name="PasswordEntryBox" Margin="15,0,30,0" Grid.Column="1" Grid.Row="1"/>
-                <Label HorizontalOptions="Center" Text="E-Mail: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="2"/>
-                <Entry Placeholder="e-mail" x:Name="EmailEntryBox" Margin="15,0,30,0"  Grid.Column="1" Grid.Row="2"/>
-                <Label HorizontalOptions="Center" Text="Steam: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="3"/>
-                <Entry Placeholder="Link do profilu Steam" x:Name="SteamLinkEntryBox" Margin="15,0,30,0" Grid.Column="1" Grid.Row="3"/>
+                <Label HorizontalOptions="Center" Text="Powtórz: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="2"/>
+                <Entry IsPassword="True" Placeholder="Powtórz hasło" x:Name="PasswordRepeatEntryBox" Margin="15,0,30,0" Grid.Column="1" Grid.Row="2"/>
+                <Label HorizontalOptions="Center" Text="E-Mail: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="3"/>
+                <Entry Placeholder="e-mail" x:Name="EmailEntryBox" Margin="15,0,30,0"  Grid.Column="1" Grid.Row="3"/>
+                <Label HorizontalOptions="Center" Text="Steam: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="4"/>
+                <Entry Placeholder="Link do profilu Steam" x:Name="SteamLinkEntryBox" Margin="15,0,30,0" Grid.Column="1" Grid.Row="4"/>
             </Grid>
             <!--<Grid>
                 <Grid.ColumnDefinitions>

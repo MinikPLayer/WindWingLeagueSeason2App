@@ -36,6 +36,11 @@
 
             <Style ApplyToDerivedTypes="True" TargetType="Picker">
                 <Setter Property="TitleColor" Value="{DynamicResource DynamicSecondaryTextColor}"/>
+                <Setter Property="TextColor" Value="{DynamicResource DynamicPrimaryTextColor}"/>
+            </Style>
+
+            <Style ApplyToDerivedTypes="True" TargetType="DatePicker">
+                <Setter Property="TextColor" Value="{DynamicResource DynamicSecondaryTextColor}"/>
             </Style>
 
 

@@ -14,20 +14,26 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <Entry Placeholder="Czas sucho" x:Name="DryTimeBox" Text="" Margin="30,0,15,0" Grid.Row="0" Grid.Column="0" />
-                <Entry Placeholder="Link" x:Name="DryLinkBox" Text="" Margin="15,0,30,0" Grid.Row="0" Grid.Column="1" />
-                <Entry Placeholder="Czas mokro" x:Name="WetTimeBox" Text="" Margin="30,0,15,0" Grid.Row="1" Grid.Column="0" />
-                <Entry Placeholder="Link" x:Name="WetLinkBox" Text="" Margin="15,0,30,0" Grid.Row="1" Grid.Column="1" />
+                <Label Padding="20,15,0,0" Text="Tor suchy: " FontSize="16" Grid.Row="0" Grid.Column="0" />
+                <Entry FontSize="16" Placeholder="Czas sucho" x:Name="DryTimeBox" Text="" Margin="5,0,5,0" Grid.Row="0" Grid.Column="1" />
+                <Entry FontSize="16" Placeholder="Link sucho" x:Name="DryLinkBox" Text="" Margin="5,0,20,0" Grid.Row="0" Grid.Column="2" />
+                <Label Padding="20,15,0,0" Text="Tor mokry: " FontSize="16" Grid.Row="1" Grid.Column="0" />
+                <Entry FontSize="16" Placeholder="Czas mokro" x:Name="WetTimeBox" Text="" Margin="5,0,5,0" Grid.Row="1" Grid.Column="1" />
+                <Entry FontSize="16" Placeholder="Link mokro" x:Name="WetLinkBox" Text="" Margin="5,0,20,0" Grid.Row="1" Grid.Column="2" />
 
             </Grid>
             <Button HorizontalOptions="Center" x:Name="RegisterButton" Text="Zarejestruj się" Clicked="RegisterButton_Clicked" />
-            <Label x:Name="LogLabel" Text=""/>
-            <Label Text="" />
+            <Label Text="Instrukcje rejestracji:" HorizontalOptions="Center" />
+            <Label Padding="30,0,30,0" HorizontalOptions="Center" Text="1) Wykonaj próbę czasową na mokrym i suchym torze który wyświetla się u góry strony ( Mercedesem )" />
+            <Label Padding="30,0,30,0" HorizontalOptions="Center" Text="2) Zrób zrzut ekranu lub przygotuj inny film dokumentujący czas ( np film )" />
+            <Label Padding="30,0,30,0" HorizontalOptions="Center" Text="3) Podaj czas ( w formacie minuty:sekundy:milisekundy ) link do dowodu w polach odpowiednio dla suchego i mokrego toru" />
+            <Label Padding="30,0,30,0" HorizontalOptions="Center" Text="W przypadku zdjęcia - możesz wrzucić zdjęcie na specjalny kanał na naszym discordzie i podać link do wiadomości - prawy przycisk myszki -> Kopiuj link z wiadomością" />
             <!--<Button Text="Add New" Clicked="Button_Clicked"/>-->
         </StackLayout>
     </ContentPage.Content>

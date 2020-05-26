@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace WindWingLeagueSeason2App.Droid
 {
-    [Activity(Label = "WindWingLeagueSeason2App", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "WindWingLeagueSeason2App", RoundIcon = "@drawable/icon", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

@@ -24,7 +24,7 @@
 
     <StackLayout>
         <local:LabeledSwitch x:Name="DarkModeSwitch" Title="Ciemny motyw" PropertyChanged="DarkModeSwitch_PropertyChanged"/>
-        <Label x:Name="LogLabel" />
+        <!--<Label x:Name="LogLabel" />-->
     </StackLayout>
     
 </ContentPage>

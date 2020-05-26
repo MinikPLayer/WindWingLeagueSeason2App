@@ -37,8 +37,8 @@ namespace WindWingLeagueSeason2App.Views
             //MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
             MenuPages.Add((int)MenuItemType.InitScreen, (NavigationPage)Detail);
 
-            networkData = new NetworkData("192.168.1.105", 8148);
-            //networkData = new NetworkData("minik.ml", 8148);
+            //networkData = new NetworkData("192.168.1.105", 8148);
+            networkData = new NetworkData("minik.ml", 8148);
 
 
         }

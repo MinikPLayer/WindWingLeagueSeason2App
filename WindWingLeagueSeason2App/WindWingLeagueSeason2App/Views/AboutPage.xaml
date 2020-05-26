@@ -38,9 +38,9 @@
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
-                                <Span Text="Oficjalna aplikacja WindWing" FontAttributes="Bold" FontSize="22" />
+                                <Span Text="Oficjalna aplikacja ligi WindWing" FontAttributes="Bold" FontSize="20" />
                                 <Span Text=" " />
-                                <Span Text="0.3b" ForegroundColor="{DynamicResource DynamicSecondaryTextColor}" />
+                                <Span Text="0.5" ForegroundColor="{DynamicResource DynamicSecondaryTextColor}" />
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
@@ -49,8 +49,8 @@
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
-                                <Span Text="Oficjalna aplikacja ligii F1 2019 " />
-                                <Span Text="WindWing" FontAttributes="Bold" />
+                                <Span Text="Liga w grze " />
+                                <Span Text="F1 2019" FontAttributes="Bold" />
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
@@ -60,7 +60,7 @@
                         <FormattedString>
                             <FormattedString.Spans>
                                 <Span Text="Administrator ligii: " />
-                                <Span Text="Yomo" FontAttributes="Bold" />
+                                <Span Text="Yomonoe" FontAttributes="Bold" />
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
@@ -79,6 +79,24 @@
                         Command="{Binding OpenWebCommand}"
                         CommandParameter="https://discord.gg/rFRc4Rq"
                         BackgroundColor="#7289da"
+                        TextColor="White" />
+
+                <Button Margin="0,10,0,0" Text="YouTube"
+                        Command="{Binding OpenWebCommand}"
+                        CommandParameter="https://www.youtube.com/channel/UC3g7l6CEhr-udt5ckdj0lNA"
+                        BackgroundColor="#FF0000"
+                        TextColor="White" />
+
+                <Button Margin="0,10,0,0" Text="Strona FB"
+                        Command="{Binding OpenWebCommand}"
+                        CommandParameter="https://www.facebook.com/WindWing-League-101483441591529/"
+                        BackgroundColor="#4267B2"
+                        TextColor="White" />
+
+                <Button Margin="0,10,0,0" Text="Grupa FB"
+                        Command="{Binding OpenWebCommand}"
+                        CommandParameter="https://www.facebook.com/groups/247967369731034"
+                        BackgroundColor="#4267B2"
                         TextColor="White" />
             </StackLayout>
         </ScrollView>
