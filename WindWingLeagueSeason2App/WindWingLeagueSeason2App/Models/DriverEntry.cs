@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace WindWingLeagueSeason2App.Models
 {
-    public class DriverEntry
+    public class DriverEntry : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -19,6 +19,7 @@ namespace WindWingLeagueSeason2App.Models
             get
             {
                 //return _name;
+                
                 return user.login;
             }
             /*set

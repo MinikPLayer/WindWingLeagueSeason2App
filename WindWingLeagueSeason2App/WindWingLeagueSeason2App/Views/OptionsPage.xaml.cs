@@ -24,8 +24,15 @@ namespace WindWingLeagueSeason2App.Views
 
         protected override void OnAppearing()
         {
+
+
             initialized = true;
             DarkModeSwitch.IsChecked = ThemeManager.darkMode;
+
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                DarkModeSwitch.IsVisible = false;
+            }
 
             /*if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LOG.txt")))
             {
@@ -40,11 +47,20 @@ namespace WindWingLeagueSeason2App.Views
 
         private void DarkModeSwitch_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (initialized)
+            if (initialized && Device.RuntimePlatform != Device.UWP)
             {
                 ThemeManager.darkMode = DarkModeSwitch.IsChecked;
 
                 MainPage.config.darkMode = DarkModeSwitch.IsChecked;
+            }
+        }
+
+        private void EasterEggSwitch_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (EasterEggSwitch.IsChecked)
+            {
+                DisplayAlert("1 ??? :)", "Świątynią prędkości ten tor nazywają", "Szukam następnych");
+                EasterEggSwitch.IsChecked = false;
             }
         }
     }

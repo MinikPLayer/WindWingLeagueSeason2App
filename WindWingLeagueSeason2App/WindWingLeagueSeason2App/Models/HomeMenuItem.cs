@@ -13,9 +13,15 @@ namespace WindWingLeagueSeason2App.Models
         Register,
         RegisterToSeason,
         RegisteredToSeason,
+        DriverInfo,
         About,
         ADMIN_Users,
         ADMIN_Seasons,
+        ADMIN_SeasonUser,
+        ADMIN_SaveSeason,
+        ADMIN_RaceResults,
+        ADMIN_RegisterSeasonUser,
+        ADMIN_RegisterSeasonUsersSelector
     }
     public class HomeMenuItem
     {

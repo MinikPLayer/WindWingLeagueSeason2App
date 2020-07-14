@@ -26,7 +26,10 @@ namespace WindWingLeagueSeason2App.Views
         {
             InitializeComponent();
 
-            UpdateItems();
+            if (actualMenu == null)
+            {
+                UpdateItems();
+            }
 
             actualMenu = this;
         }
@@ -59,6 +62,11 @@ namespace WindWingLeagueSeason2App.Views
                 else
                 {
                     menuItems.Add(new HomeMenuItem { Id = MenuItemType.Leaderboards, Title = "Ranking" });
+                    if (!SeasonsScreen.seasonSelected.userRegistered && !(SeasonsScreen.seasonSelected.finishedRaces >= SeasonsScreen.seasonSelected.racesCount))
+                    {
+                        menuItems.Add(new HomeMenuItem { Id = MenuItemType.RegisterToSeason, Title = "Rejestracja" });
+                    }
+                    
                 }
 
                 menuItems.Add(new HomeMenuItem { Id = MenuItemType.About, Title = "O lidze" });
@@ -90,9 +98,6 @@ namespace WindWingLeagueSeason2App.Views
                 var id = (int)((HomeMenuItem)e.SelectedItem).Id;
                 await RootPage.NavigateFromMenu(id);
             };
-
-
-
 
             LogOutButton.IsVisible = LoginScreen.loggedIn;
         }
@@ -163,6 +168,8 @@ namespace WindWingLeagueSeason2App.Views
                 loginScreen = (LoginScreen)((MainPage)Application.Current.MainPage).GetLoadedPage(MenuItemType.Login);
             }
             loginScreen.LogOut();
+
+            Environment.Exit(1);
         }
 
         private void LogOutButton_Clicked(object sender, EventArgs e)
@@ -173,6 +180,11 @@ namespace WindWingLeagueSeason2App.Views
         private void SeasonPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
             SeasonsScreen.SelectSeason(SeasonPicker.SelectedIndex);
+        }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            DisplayAlert("? 2 ?? :)", "W pierwszym sezonie w historii się na nim ścigają", "Yay, ale jeszcze kilka zostało");
         }
     }
 }

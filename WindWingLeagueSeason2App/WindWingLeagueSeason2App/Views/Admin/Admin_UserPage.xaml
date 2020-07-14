@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="WindWingLeagueSeason2App.Views.Admin.Admin_UserPage"
+             xmlns:local="clr-namespace:WindWingLeagueSeason2App.Views.Admin"
+             xmlns:vm="clr-namespace:WindWingLeagueSeason2App.ViewModels"
+             Title="{Binding Title}">
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout VerticalOptions="StartAndExpand">
+                <Button x:Name="BackButton" Text="Powrót" Clicked="BackButton_Clicked" />
+                <Label x:Name="SeasonName" HorizontalOptions="Center" Text="" FontSize="32" TextColor="{DynamicResource DynamicSecondaryTextColor}"/>
+                <Label x:Name="UsernameText" Text="User ???" FontSize="48" HorizontalOptions="Center" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Label Padding="20,0,0,0" Text="Czas sucho: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="0" />
+                    <Entry x:Name="DryTimeText" Text="" FontSize="24" Grid.Row="0" Grid.Column="1" />
+                    <Label Padding="20,0,0,0" Text="Czas mokro: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="1" />
+                    <Entry x:Name="WetTimeText" Text="" FontSize="24" Grid.Row="1" Grid.Column="1" />
+                    <Label Padding="20,0,0,0" Text="Zespół: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="2" />
+                    <Picker x:Name="TeamText" ItemsSource="{Binding teams}" FontSize="24" Grid.Row="2" Grid.Column="1" />
+                    <Label Padding="20,0,0,0" Text="Zespół 1: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="3" />
+                    <Picker x:Name="Team1Text" ItemsSource="{Binding teams}" FontSize="24" Grid.Row="3" Grid.Column="1" />
+                    <Label Padding="20,0,0,0" Text="Zespół 2: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="4" />
+                    <Picker x:Name="Team2Text" ItemsSource="{Binding teams}" FontSize="24" Grid.Row="4" Grid.Column="1" />
+                    <Label Padding="20,0,0,0" Text="Zespół 3: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="5" />
+                    <Picker x:Name="Team3Text" ItemsSource="{Binding teams}" FontSize="24" Grid.Row="5" Grid.Column="1" />
+                </Grid>
+                <Grid>
+                    <Button x:Name="DryLinkButton" Text="Link sucho" Grid.Row="0" Grid.Column="0" Clicked="DryLinkButton_Clicked" />
+                    <Button x:Name="WetLinkButton" Text="Link mokro" Grid.Row="0" Grid.Column="1" Clicked="WetLinkButton_Clicked"/>
+                    <Button x:Name="SteamLinkButton" Text="Link steam" Grid.Row="0" Grid.Column="2" Clicked="SteamLinkButton_Clicked"/>
+                </Grid>
+                <Button x:Name="SaveButton" Text="Zapisz" Clicked="SaveButton_Clicked" />
+
+                <Label x:Name="LogLabel" Text=""/>
+                <Label Text="" />
+                <!--<Button Text="Add New" Clicked="Button_Clicked"/>-->
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+
+</ContentPage>

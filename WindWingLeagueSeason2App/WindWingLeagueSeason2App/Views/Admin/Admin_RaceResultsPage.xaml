@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="WindWingLeagueSeason2App.Views.Admin_RaceResultsPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label x:Name="RaceNameLabel" Text="Australia" HorizontalOptions="Center" FontSize="36"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Kierowca" Grid.Column="0" HorizontalTextAlignment="Center"/>
+                <Label Text="Najlepszy czas" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                <Label Text="Różnica" Grid.Column="2" HorizontalTextAlignment="Center"/>
+            </Grid>
+            <ListView x:Name="EntriesListView"
+                      ItemsSource="{Binding entries}"
+                      IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                      ItemSelected="EntriesListView_ItemSelected"
+                      RowHeight="48">
+                <d:ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>First test</x:String>
+                        <x:String>Second test</x:String>
+                    </x:Array>
+                </d:ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid BackgroundColor="{Binding color}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Padding="10,0,0,0" Text="{Binding name}" d:Text="{Binding .}" FontSize="16" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                <Entry Grid.Column="1" Placeholder="Najl Okr" Text="{Binding bestLapStr}" x:Name="BestLapEntry"/>
+                                <Entry Grid.Column="2" Placeholder="Różnica" Text="{Binding gapStr}" Focused="GapEntry_Focused" x:Name="GapEntry"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--<Button Text="Add New" Clicked="Button_Clicked"/>-->
+
+            <Button Text="Zapisz" x:Name="SaveButton" Clicked="SaveButton_Clicked" />
+            <Button Text="Powrót" x:Name="BackButton" Clicked="BackButton_Clicked" />
+            <Button Text="Wyczyść" x:Name="ClearButton" Clicked="ClearButton_Clicked" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <Button Text="\/" x:Name="MoveDownButton" Grid.Column="0" Clicked="MoveDownButton_Clicked" />
+                <Button Text="/\" x:Name="MoveUpButton" Grid.Column="1" Clicked="MoveUpButton_Clicked" />
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+
+<!--, StringFormat=\{0:mm\\:ss\\:fff\}-->

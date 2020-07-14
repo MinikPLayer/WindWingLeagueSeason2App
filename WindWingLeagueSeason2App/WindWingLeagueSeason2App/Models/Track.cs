@@ -41,7 +41,7 @@ namespace WindWingLeagueSeason2App.Models
         }
 
         public static Track[] tracks = new Track[] {
-                new Track(0, "Albert Park Circuit", "Australia", "Melbourne", 5303  ),
+                new Track(0, "Albert Park Circuit", "Australia", "Melbourne", 5303 ),
                 new Track(1, "Bahrain International Circuit", "Bahrain", "Sakhir", 5412),
                 new Track(2, "Shanghai International Circuit", "Chiny", "Shanghai", 5451 ),
                 new Track(3, "Baku City Circuit", "Azerbejdzan", "Baku", 6003),
@@ -61,7 +61,7 @@ namespace WindWingLeagueSeason2App.Models
                 new Track(17, "Autódromo Hermanos Rodríguez", "Meksyk", "Mexico City", 4304),
                 new Track(18, "Circuit of the Americas", "USA", "Austin", 5513),
                 new Track(19, "Autódromo José Carlos Pace", "Brazylia", "Sao Paulo", 4309),
-                new Track(20, "Yas Marina Circuit", "Zjedoczone Emiraty Arabskie", "Abu Dhabi", 5554)
+                new Track(20, "Yas Marina Circuit", "Abu Dhabi", "Abu Dhabi", 5554)
         };
         public static Track GetTrack(int id)
         {

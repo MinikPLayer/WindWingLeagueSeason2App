@@ -6,35 +6,41 @@
              mc:Ignorable="d"
              x:Class="WindWingLeagueSeason2App.Views.RegisterToSeasonPage">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="StartAndExpand">
-            <Label Text="Rejestracja" FontSize="64" HorizontalOptions="Center"/>
-            <Label x:Name="SeasonName" HorizontalOptions="Center" Text="" FontSize="32" TextColor="{DynamicResource DynamicSecondaryTextColor}"/>
-            <Label x:Name="RegistrationTrack" HorizontalOptions="Center" Text="" FontSize="32" TextColor="{DynamicResource DynamicSecondaryTextColor}"/>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
+        <ScrollView>
+            <StackLayout VerticalOptions="StartAndExpand">
+                <!--<Label Text="Rejestracja do sezonu" FontSize="32" HorizontalOptions="Center"/>-->
+                <Label x:Name="SeasonName" HorizontalOptions="Center" Text="Rejestracja do sezonu " FontSize="26" TextColor="{DynamicResource DynamicPrimaryTextColor}"/>
+                <Label x:Name="RegistrationTrack" HorizontalOptions="Center" Text="" FontSize="26" TextColor="{DynamicResource DynamicSecondaryTextColor}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
 
-                <Label Padding="20,15,0,0" Text="Tor suchy: " FontSize="16" Grid.Row="0" Grid.Column="0" />
-                <Entry FontSize="16" Placeholder="Czas sucho" x:Name="DryTimeBox" Text="" Margin="5,0,5,0" Grid.Row="0" Grid.Column="1" />
-                <Entry FontSize="16" Placeholder="Link sucho" x:Name="DryLinkBox" Text="" Margin="5,0,20,0" Grid.Row="0" Grid.Column="2" />
-                <Label Padding="20,15,0,0" Text="Tor mokry: " FontSize="16" Grid.Row="1" Grid.Column="0" />
-                <Entry FontSize="16" Placeholder="Czas mokro" x:Name="WetTimeBox" Text="" Margin="5,0,5,0" Grid.Row="1" Grid.Column="1" />
-                <Entry FontSize="16" Placeholder="Link mokro" x:Name="WetLinkBox" Text="" Margin="5,0,20,0" Grid.Row="1" Grid.Column="2" />
-
-            </Grid>
-            <Button HorizontalOptions="Center" x:Name="RegisterButton" Text="Zarejestruj się" Clicked="RegisterButton_Clicked" />
-            <Label Text="Instrukcje rejestracji:" HorizontalOptions="Center" />
-            <Label Padding="30,0,30,0" HorizontalOptions="Center" Text="1) Wykonaj próbę czasową na mokrym i suchym torze który wyświetla się u góry strony ( Mercedesem )" />
-            <Label Padding="30,0,30,0" HorizontalOptions="Center" Text="2) Zrób zrzut ekranu lub przygotuj inny film dokumentujący czas ( np film )" />
-            <Label Padding="30,0,30,0" HorizontalOptions="Center" Text="3) Podaj czas ( w formacie minuty:sekundy:milisekundy ) link do dowodu w polach odpowiednio dla suchego i mokrego toru" />
-            <Label Padding="30,0,30,0" HorizontalOptions="Center" Text="W przypadku zdjęcia - możesz wrzucić zdjęcie na specjalny kanał na naszym discordzie i podać link do wiadomości - prawy przycisk myszki -> Kopiuj link z wiadomością" />
-            <!--<Button Text="Add New" Clicked="Button_Clicked"/>-->
-        </StackLayout>
+                    <Label Padding="20,15,0,0" Text="Tor suchy: " FontSize="16" Grid.Row="0" Grid.Column="0" />
+                    <Entry FontSize="16" Placeholder="Czas sucho" x:Name="DryTimeBox" Text="" Margin="5,0,5,0" Grid.Row="0" Grid.Column="1" />
+                    <Entry FontSize="16" Placeholder="Link sucho" x:Name="DryLinkBox" Text="" Margin="5,0,20,0" Grid.Row="0" Grid.Column="2" />
+                    <Label Padding="20,15,0,0" Text="Tor mokry: " FontSize="16" Grid.Row="1" Grid.Column="0" />
+                    <Entry FontSize="16" Placeholder="Czas mokro" x:Name="WetTimeBox" Text="" Margin="5,0,5,0" Grid.Row="1" Grid.Column="1" />
+                    <Entry FontSize="16" Placeholder="Link mokro" x:Name="WetLinkBox" Text="" Margin="5,0,20,0" Grid.Row="1" Grid.Column="2" />
+                    <Picker Margin="15,0,5,0" x:Name="Team1Picker" Title="Zespół nr 1" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding teams}" />
+                    <Picker Margin="5,0,5,0" x:Name="Team2Picker" Title="Zespół nr 2" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding teams}"/>
+                    <Picker Margin="5,0,15,0" x:Name="Team3Picker" Title="Zespół nr 3" Grid.Row="2" Grid.Column="2" ItemsSource="{Binding teams}"/>
+                </Grid>
+                <Button HorizontalOptions="Center" x:Name="RegisterButton" Text="Zarejestruj się" Clicked="RegisterButton_Clicked" />
+                <Label FontSize="10" Padding="30,0,30,0" HorizontalOptions="Center" Text="1) Wykonaj próbę czasową Mercedesem na mokrym i suchym torze który wyświetla się u góry strony" />
+                <Label FontSize="10" Padding="30,0,30,0" HorizontalOptions="Center" Text="2) Zrób zrzut ekranu lub przygotuj inny dowód dokumentujący czas ( np film )" />
+                <Label FontSize="10" Padding="30,0,30,0" HorizontalOptions="Center" Text="3) Podaj czas ( w formacie minuty:sekundy:milisekundy ) oraz link do dowodu w polach odpowiednio dla suchego i mokrego toru" />
+                <Label FontSize="10" Padding="30,0,30,0" HorizontalOptions="Center" Text="4) Wybierz 3 zespoły w których chcesz jeździć ( zaczynając od najbardziej preferowanego - 1 )" />
+                <Label FontSize="10" Padding="30,0,30,0" HorizontalOptions="Center" Text="W przypadku zdjęcia - możesz wrzucić zdjęcie na specjalny kanał na naszym discordzie i podać link do wiadomości - prawy przycisk myszki -> Kopiuj link z wiadomością" />
+                <!--<Button Text="Add New" Clicked="Button_Clicked"/>-->
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

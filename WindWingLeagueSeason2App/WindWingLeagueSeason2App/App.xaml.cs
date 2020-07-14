@@ -10,27 +10,33 @@ namespace WindWingLeagueSeason2App
 {
     public partial class App : Application
     {
-        
+#if DEBUG
+        public const bool debug = true;
+#else
+        public const bool debug = false;
+#endif
+
+
+        public const int serverSupportVersion = 4;
+        public const int appVersion = 700;
 
         public App()
         {
             InitializeComponent();
 
-            //SetDynamicResource(DynamicBackgroundColor, "DarkSurface");
-
-
-            //ThemeManager.SetLightMode();
-
-            //ThemeManager.SetDarkMode();
             ThemeManager.darkMode = true;
 
             if(File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LOG.txt")))
             {
-                File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LOG.txt"));
+                File.AppendAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "LOG.txt"), "[" + DateTime.Now.ToString() + "]\n");
             }
 
             DependencyService.Register<MockDataStore>();
-            MainPage = new MainPage();
+            if(MainPage == null)
+            {
+                MainPage = new MainPage();
+            }
+            
         }
 
         protected override void OnStart()

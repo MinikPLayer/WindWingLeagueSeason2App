@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using WindWingLeagueSeason2App.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,34 +13,13 @@ namespace WindWingLeagueSeason2App.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LeaderboardsPage : ContentPage
     {
-        public ObservableCollection<Models.LeaderboardsEntry> entries { get; set; }
+        public ObservableCollection<LeaderboardsEntry> entries { get; set; }
 
         bool prefixesAdded = false;
 
-        class Team
-        {
-            public string name;
-            public string shortName;
-
-            public Team(string name, string shortName)
-            {
-                this.name = name;
-                this.shortName = shortName;
-            }
-        }
-
-        Team[] teams = new Team[] { new Team("Mercedes", "MER"), new Team("Ferrari", "FRI"), new Team("Red Bull", "RDB"), new Team("McLaren", "MCL"), new Team("Racing Point", "RPT"), new Team("Renault", "RNL"), new Team("Haas", "HAS"), new Team("Williams", "WIL"), new Team("Alfa Romeo", "ARO"), new Team("Toro Rosso", "TRS"), new Team("Other", "OTH") }; 
-
         Team GetTeam(string name)
         {
-            for(int i = 0;i<teams.Length;i++)
-            {
-                if(teams[i].shortName == name)
-                {
-                    return teams[i];
-                }
-            }
-            return null;
+            return Team.GetTeamShort(name);
         }
 
         public LeaderboardsPage()
@@ -49,9 +28,9 @@ namespace WindWingLeagueSeason2App.Views
 
             Title = "Ranking";
 
-            entries = new ObservableCollection<Models.LeaderboardsEntry>();
+            entries = new ObservableCollection<LeaderboardsEntry>();
 
-            BindingContext = this;
+            
 
             //AddEntry(new Models.LeaderboardsEntry { name = "Test", score = 30 });
             //AddEntry(new Models.LeaderboardsEntry { name = "Test2", score = 60 });
@@ -61,8 +40,9 @@ namespace WindWingLeagueSeason2App.Views
 
         protected override void OnAppearing()
         {
-            entries.Clear();
+            BindingContext = this;
 
+            entries.Clear();
             UpdateLeaderboards();
         }
 
@@ -71,7 +51,7 @@ namespace WindWingLeagueSeason2App.Views
             //string data = await MainPage.networkData.RequestAsync("Leaderboards");
             while(SeasonsScreen.seasonSelected == null)
             {
-                //await DisplayAlert("OK", "Season Selected is null, Updating", "OK");
+                await DisplayAlert("OK", "Season Selected is null, Updating", "OK");
                 //await MenuPage.actualMenu.UpdateSeasons(true);
                 await Task.Delay(100);
             }
@@ -79,12 +59,13 @@ namespace WindWingLeagueSeason2App.Views
             string data = await MainPage.networkData.RequestAsync("Leaderboards;" + SeasonsScreen.seasonSelected.id.ToString());
 
             Debug.Log("Leaderboards response: " + data);
-
+            
+            
             ParseData(data);
 
         }
 
-        void AddEntry(Models.LeaderboardsEntry entry)
+        void AddEntry(LeaderboardsEntry entry)
         {
             IsBusy = true;
             RemovePrefixes();
@@ -164,13 +145,13 @@ namespace WindWingLeagueSeason2App.Views
             }
         }    
 
-        void ParseData(string data)
+        async void ParseData(string data)
         {
             try
             {
                 if(data == "NS")
                 {
-                    AddEntry(new Models.LeaderboardsEntry { name = "Brak danych" });
+                    AddEntry(new LeaderboardsEntry { name = "Brak danych" });
                     return;
                 }
 
@@ -195,41 +176,89 @@ namespace WindWingLeagueSeason2App.Views
                 if(datas.Length == 0)
                 {
                     MainPage.log += "[ERROR] - {Parse Leaderboards Data}  No datas found";
+                    if(App.debug)
+                    {
+                        DisplayAlert("Ranking", "Brak danych w pakiecie", "OK");
+                    }
                     return;
                 }
 
-                for(int i = 0;i<number;i++)
+                //entries.Clear();
+
+                for (int i = 0;i<number;i++)
                 {
                     datas[i] = datas[i].Substring(1, datas[i].Length - 2);
                     string[] infos = datas[i].Split(',');
                     if(infos.Length < 3)
                     {
                         MainPage.log += "[ERROR] - {Parse Leaderboards Data}  Not enough info in data";
+                        if (App.debug)
+                        {
+                            DisplayAlert("Ranking", "Brak wystarczającej ilości danych w pakiecie", "OK");
+                        }
                         return;
                     }
 
                     //AddEntry(new Models.LeaderboardsEntry(infos[0], int.Parse(infos[1])));
-                    AddEntry(new Models.LeaderboardsEntry { name = infos[0], score = int.Parse(infos[1]), team = GetTeam(infos[2]).name });
+
+                    int id = int.Parse(infos[0]);
+                    User u = await User.GetUser(id);
+                    if(u == null)
+                    {
+                        DisplayAlert("Błąd", "Błąd pobierania danych o tabeli - użytkownik nie istnieje", "OK");
+                        return;
+                    }
+                    AddEntry(new LeaderboardsEntry { user = u, name = u.login, score = int.Parse(infos[1]), team = GetTeam(infos[2]).name });
+                }
+
+                if (App.debug)
+                {
+                    //DisplayAlert("Pobrano", "Entries count: " + entries.Count.ToString(), "OK");
                 }
             }
             catch(Exception e)
             {
                 MainPage.log += "[ERROR] " + e.ToString();
-                LogLabel.Text += e.ToString();
 
                 DisplayAlert("Blad pakietu", "Nie udalo sie przetworzyc pakietu rankingu, blad: \n " + e.ToString(), "OK");
             }
 
         }
 
+        async void MoveToDriverInfo(LeaderboardsEntry entry)
+        {
+            Season.SeasonUser u = await SeasonsScreen.seasonSelected.GetUser(entry.user.id);
+            /*for(int i = 0;i<SeasonsScreen.seasonSelected.users.Count;i++)
+            {
+                if(SeasonsScreen.seasonSelected.users[i].user.id == entry.user.id)
+                {
+                    u = SeasonsScreen.seasonSelected.users[i];
+                    break;
+                }
+            }*/
+            if (u == null)
+            {
+                DisplayAlert("Nieoczekiwany błąd", "Nie znaleziono użytkownika w sezonie", "OK");
+                return;
+            }
+
+            DriverInfoPage.user = u;
+            DriverInfoPage.entry = entry;
+
+            MainPage.singleton.NavigateFromMenu((int)MenuItemType.DriverInfo);
+        }
+
         private void EntriesListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            LeaderboardsEntry entry = (LeaderboardsEntry)e.SelectedItem;
+            if (entry == null) return;
 
+            MoveToDriverInfo(entry);
         }
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            AddEntry(new Models.LeaderboardsEntry { name = "Entry " + entries.Count.ToString(), score = entries.Count });
+            AddEntry(new LeaderboardsEntry { name = "Entry " + entries.Count.ToString(), score = entries.Count });
         }
     }
 }

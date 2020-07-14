@@ -6,32 +6,32 @@
              mc:Ignorable="d"
              x:Class="WindWingLeagueSeason2App.Views.RegisterPage">
     <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Label Text="Rejestracja" FontSize="64" HorizontalOptions="Center"/>
+                <Grid>
 
-        <StackLayout>
-            <Label Text="Rejestracja" FontSize="64" HorizontalOptions="Center"/>
-            <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
-            
-                <Label HorizontalOptions="Center" Text="Login: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="0"/>
-                <Entry Placeholder="Login" x:Name="LoginEntryBox" Margin="15,0,30,0" Grid.Column="1" Grid.Row="0"/>
-                <Label HorizontalOptions="Center" Text="Hasło: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="1"/>
-                <Entry IsPassword="True" Placeholder="Hasło" x:Name="PasswordEntryBox" Margin="15,0,30,0" Grid.Column="1" Grid.Row="1"/>
-                <Label HorizontalOptions="Center" Text="Powtórz: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="2"/>
-                <Entry IsPassword="True" Placeholder="Powtórz hasło" x:Name="PasswordRepeatEntryBox" Margin="15,0,30,0" Grid.Column="1" Grid.Row="2"/>
-                <Label HorizontalOptions="Center" Text="E-Mail: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="3"/>
-                <Entry Placeholder="e-mail" x:Name="EmailEntryBox" Margin="15,0,30,0"  Grid.Column="1" Grid.Row="3"/>
-                <Label HorizontalOptions="Center" Text="Steam: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="4"/>
-                <Entry Placeholder="Link do profilu Steam" x:Name="SteamLinkEntryBox" Margin="15,0,30,0" Grid.Column="1" Grid.Row="4"/>
-            </Grid>
-            <!--<Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label HorizontalOptions="Center" Text="Login: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="0"/>
+                    <Entry Placeholder="Login" x:Name="LoginEntryBox" Margin="15,0,30,0" Grid.Column="1" Grid.Row="0"/>
+                    <Label HorizontalOptions="Center" Text="Hasło: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="1"/>
+                    <Entry IsPassword="True" Placeholder="Hasło" x:Name="PasswordEntryBox" Margin="15,0,30,0" Grid.Column="1" Grid.Row="1"/>
+                    <Label HorizontalOptions="Center" Text="Powtórz: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="2"/>
+                    <Entry IsPassword="True" Placeholder="Powtórz hasło" x:Name="PasswordRepeatEntryBox" Margin="15,0,30,0" Grid.Column="1" Grid.Row="2"/>
+                    <Label HorizontalOptions="Center" Text="E-Mail: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="3"/>
+                    <Entry Placeholder="e-mail" x:Name="EmailEntryBox" Margin="15,0,30,0"  Grid.Column="1" Grid.Row="3"/>
+                    <Label HorizontalOptions="Center" Text="Steam: " FontSize="16" Grid.Column="0" Margin="30,10,0,0" Grid.Row="4"/>
+                    <Entry Placeholder="Link do profilu Steam" x:Name="SteamLinkEntryBox" Margin="15,0,30,0" Grid.Column="1" Grid.Row="4"/>
+                </Grid>
+                <!--<Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -41,11 +41,12 @@
                 <Entry Placeholder="Czas mokro" x:Name="BestLapWetBox" Margin="30,0,0,0" Grid.Column="0" Grid.Row="1" />
                 <Entry Placeholder="Link" x:Name="BestLapWetLink" Grid.Row="1" Grid.Column="1" Margin="0,0,30,0"/>
             </Grid>-->
-            <Button x:Name="RegisterButton" Text="Zarejestruj" HorizontalOptions="Center" Clicked="RegisterButton_Clicked" />
+                <Button x:Name="RegisterButton" Text="Zarejestruj" HorizontalOptions="Center" Clicked="RegisterButton_Clicked" />
 
-            <Label x:Name="LogLabel" Text=""/>
-            <Label Text="" />
-        </StackLayout>
+                <Label x:Name="LogLabel" Text=""/>
+                <Label Text="" />
+            </StackLayout>
+        </ScrollView>
         <!--<Button Text="Add New" Clicked="Button_Clicked"/>-->
     </ContentPage.Content>
 </ContentPage>

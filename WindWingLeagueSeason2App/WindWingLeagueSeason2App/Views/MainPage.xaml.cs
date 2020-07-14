@@ -9,6 +9,7 @@ using WindWingLeagueSeason2App;
 
 using WindWingLeagueSeason2App.Models;
 using System.Threading;
+using System.Linq;
 
 namespace WindWingLeagueSeason2App.Views
 {
@@ -35,21 +36,46 @@ namespace WindWingLeagueSeason2App.Views
             MasterBehavior = MasterBehavior.Popover;
 
             //MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
+            if (networkData == null)
+            {
+                if (App.debug)
+                {
+                    //networkData = new NetworkData("192.168.1.103", 8148);
+                    networkData = new NetworkData("minik.ml", 8148);
+                }
+                else
+                {
+                    networkData = new NetworkData("minik.ml", 8148);
+                }
+            }
+
             MenuPages.Add((int)MenuItemType.InitScreen, (NavigationPage)Detail);
-
-            //networkData = new NetworkData("192.168.1.105", 8148);
-            networkData = new NetworkData("minik.ml", 8148);
-
-
         }
 
         public void CloseAllPages()
         {
-            foreach (KeyValuePair<int, NavigationPage> entry in MenuPages)
+            lock (MenuPages)
             {
-                if(entry.Value != Detail)
+                int id = -1;
+                foreach(int entry in MenuPages.Keys.ToList())
                 {
-                    MenuPages.Remove(entry.Key);
+
+                    if(MenuPages[entry] == Detail)
+                    {
+                        id = entry;
+                    }
+                    MenuPages.Remove(entry);
+                }
+
+                if (id != -1)
+                {
+                    Debug.Log("[MainPage.CloseAllPages] Loading page with id " + id.ToString());
+                    NavigateFromMenu(id);
+                }
+                else
+                {
+                    Debug.Log("[MainPage.CloseAllPages] Loading leaderboards page");
+                    NavigateFromMenu((int)MenuItemType.Leaderboards);
                 }
             }
         }
@@ -98,9 +124,27 @@ namespace WindWingLeagueSeason2App.Views
                     case (int)MenuItemType.RegisteredToSeason:
                         MenuPages.Add(id, new NavigationPage(new UserRegisteredPage()));
                         break;
+                    case (int)MenuItemType.DriverInfo:
+                        MenuPages.Add(id, new NavigationPage(new DriverInfoPage()));
+                        break;
                     case (int)MenuItemType.ADMIN_Seasons:
                         MenuPages.Add(id, new NavigationPage(new Admin.SeasonsPage()));
-                        return;
+                        break;
+                    case (int)MenuItemType.ADMIN_SaveSeason:
+                        MenuPages.Add(id, new NavigationPage(new Admin.SeasonSavePage()));
+                        break;
+                    case (int)MenuItemType.ADMIN_SeasonUser:
+                        MenuPages.Add(id, new NavigationPage(new Admin.Admin_UserPage()));
+                        break;
+                    case (int)MenuItemType.ADMIN_RaceResults:
+                        MenuPages.Add(id, new NavigationPage(new Admin_RaceResultsPage()));
+                        break;
+                    case (int)MenuItemType.ADMIN_RegisterSeasonUser:
+                        MenuPages.Add(id, new NavigationPage(new Admin_RegisterUserToSeason()));
+                        break;
+                    case (int)MenuItemType.ADMIN_RegisterSeasonUsersSelector:
+                        MenuPages.Add(id, new NavigationPage(new Admin_RegisterUserToSeasonSelector()));
+                        break;
                     case (int)MenuItemType.ADMIN_Users:
                         return;
                 }

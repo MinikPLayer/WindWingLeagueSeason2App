@@ -24,6 +24,7 @@
 
     <StackLayout>
         <local:LabeledSwitch x:Name="DarkModeSwitch" Title="Ciemny motyw" PropertyChanged="DarkModeSwitch_PropertyChanged"/>
+        <local:LabeledSwitch x:Name="EasterEggSwitch" Title="???" PropertyChanged="EasterEggSwitch_PropertyChanged" />
         <!--<Label x:Name="LogLabel" />-->
     </StackLayout>
     

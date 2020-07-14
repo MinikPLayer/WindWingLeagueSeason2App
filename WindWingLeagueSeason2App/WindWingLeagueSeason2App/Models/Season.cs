@@ -16,6 +16,8 @@ namespace WindWingLeagueSeason2App.Models
             public string lapDryLink;
             public string lapWetLink;
             public int priority;
+            public Team team;
+            public Team[] prefferedTeams;
 
             public void LoadDefaults()
             {
@@ -24,6 +26,16 @@ namespace WindWingLeagueSeason2App.Models
                 this.lapDryLink = "";
                 this.lapWetLink = "";
                 this.priority = int.MaxValue;
+
+                //this.team = Team.GetTeam("Other");
+                this.team = Team.other;
+
+                this.prefferedTeams = new Team[3];
+                for(int i = 0;i<3;i++)
+                {
+                    //this.prefferedTeams[i] = Team.GetTeam("Other");
+                    this.prefferedTeams[i] = Team.other;
+                }
             }
 
             public SeasonUser()
@@ -68,6 +80,22 @@ namespace WindWingLeagueSeason2App.Models
 
                         case "lapWetLink":
                             lapWetLink = content;
+                            return true;
+
+                        case "team":
+                            team = Team.GetTeam(int.Parse(content));
+                            return true;
+
+                        case "team1":
+                            prefferedTeams[0] = Team.GetTeam(int.Parse(content));
+                            return true;
+
+                        case "team2":
+                            prefferedTeams[1] = Team.GetTeam(int.Parse(content));
+                            return true;
+
+                        case "team3":
+                            prefferedTeams[2] = Team.GetTeam(int.Parse(content));
                             return true;
 
                         default:
@@ -129,8 +157,10 @@ namespace WindWingLeagueSeason2App.Models
 
             public string Serialize()
             {
-                return "seasonUser{id{" + user.id.ToString() + "},lapDry{" + lapDry.ToString("mm':'ss':'fff") + "},lapWet{" + lapWet.ToString("mm':'ss':'fff") + "},lapDryLink{" + lapDryLink + "},lapWetLink{" + lapWetLink + "}}";
+                return "seasonUser{id{" + user.id.ToString() + "},lapDry{" + lapDry.ToString("mm':'ss':'fff") + "},lapWet{" + lapWet.ToString("mm':'ss':'fff") + "},lapDryLink{" + lapDryLink + "},lapWetLink{" + lapWetLink + "},team{" + team.id.ToString() + "},team1{" + prefferedTeams[0].id + "},team2{" + prefferedTeams[1].id + "},team3{" + prefferedTeams[2].id + "}}";
             }
+
+
 
             public void FillVariables(TimeSpan lapDry, TimeSpan lapWet, string lapDryLink, string lapWetLink, int priority = int.MaxValue)
             {
@@ -239,7 +269,7 @@ namespace WindWingLeagueSeason2App.Models
                             for (int i = 0; i < packets.Count; i++)
                             {
                                 Race r = new Race();
-                                if (!r.ParseRaceString(packets[i]))
+                                if (!await r.ParseRaceString(packets[i]))
                                 {
                                     Debug.LogError("[WindWingApp.Season.ParseSinglePacket] Cannot parse race packet");
                                     return false;
@@ -286,7 +316,7 @@ namespace WindWingLeagueSeason2App.Models
             {
                 if (!str.StartsWith("Season{"))
                 {
-                    Debug.LogError("[WindWingApp.Season.ParseSeasonString] Not a season string: bad magic");
+                    Debug.LogError("[WindWingApp.Season.ParseSeasonString] Not a season string: bad magic, string:\n" + str);
                     return false;
                 }
 
@@ -326,6 +356,41 @@ namespace WindWingLeagueSeason2App.Models
             }
         }
 
+        public async Task<SeasonUser> GetUser(int id)
+        {
+            for(int i = 0;i<users.Count;i++)
+            {
+                if(users[i].user.id == id)
+                {
+                    return users[i];
+                }
+            }
+
+            string response = await Views.MainPage.networkData.RequestAsync("SeasonUser;" + this.id.ToString() + ";Get;" + id.ToString() + ";");
+            var packets = response.Split(';');
+
+            if(packets[0] != "OK" || packets.Length == 1)
+            {
+                int index = 0;
+                if(packets.Length > 1)
+                {
+                    index = 1;
+                }
+                await Views.MainPage.singleton.DisplayAlert("Błąd", "Błąd pobierania danych o użytkowniku: " + packets[index], "OK");
+                return null; 
+            }
+
+            SeasonUser u = new SeasonUser();
+            if(!await u.Deserialize(packets[1]))
+            {
+                await Views.MainPage.singleton.DisplayAlert("Błąd", "Błąd przetwarzania danych o użytkowniku", "OK");
+                return null;
+            }
+
+            users.Add(u);
+            return u;
+        }
+
         public string Serialize()
         {
             string str = "Season{";
@@ -335,39 +400,54 @@ namespace WindWingLeagueSeason2App.Models
             str += registrationTrack.Serialize() + ",";
             str += "finishedRaces{" + finishedRaces + "}";
 
-            if (races.Count > 0)
+            str += ",races{";
+
+            for(int i = 0;i<races.Count;i++)
             {
-                str += ",races{";
-
-                for(int i = 0;i<races.Count;i++)
+                str += races[i].Serialize();
+                if(i != races.Count - 1)
                 {
-                    str += races[i].Serialize();
-                    if(i != races.Count - 1)
-                    {
-                        str += ',';
-                    }
+                    str += ',';
                 }
-
-                str += "}";
             }
 
-            if (users.Count > 0)
+            str += "}";
+
+            str += ",users{";
+
+            for (int i = 0; i < users.Count; i++)
             {
-                str += ",users{";
-
-                for (int i = 0; i < users.Count; i++)
+                str += users[i].Serialize();
+                if (i != users.Count - 1)
                 {
-                    str += users[i].Serialize();
-                    if (i != users.Count - 1)
-                    {
-                        str += ',';
-                    }
+                    str += ',';
                 }
-
-                str += "}";
             }
+
+            str += "}";
 
             return str + "}";
+        }
+
+        public void SortRaces()
+        {
+            for (int i = 0; i < races.Count; i++)
+            {
+                int index = i;
+                DateTime min = DateTime.MaxValue;
+                for (int j = i; j < races.Count; j++)
+                {
+                    if (races[j].date < min)
+                    {
+                        index = j;
+                        min = races[j].date;
+                    }
+                }
+
+                Race pom = races[i];
+                races[i] = races[index];
+                races[index] = pom;
+            }
         }
 
         void SetDefaultValues()

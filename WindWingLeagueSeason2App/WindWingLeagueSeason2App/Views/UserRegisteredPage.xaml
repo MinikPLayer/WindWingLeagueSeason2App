@@ -12,6 +12,29 @@
             <Label HorizontalOptions="Center" Text="Pierwszy wyścig:" FontSize="24" TextColor="{DynamicResource DynamicSecondaryTextColor}"/>
             <Label HorizontalOptions="Center" x:Name="FirstRaceLocation" FontSize="28" />
             <Label HorizontalOptions="Center" x:Name="FirstRaceDate" FontSize="20" TextColor="{DynamicResource DynamicSecondaryTextColor}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Label Padding="20,0,0,0" Text="Czas sucho: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="0" />
+                <Label x:Name="DryTimeText" Text="" FontSize="24" Grid.Row="0" Grid.Column="1" />
+                <Label Padding="20,0,0,0" Text="Czas mokro: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="1" />
+                <Label x:Name="WetTimeText" Text="" FontSize="24" Grid.Row="1" Grid.Column="1" />
+                <Label Padding="20,0,0,0" Text="Zespół 1: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="2" />
+                <Label x:Name="Team1Text" Text="" FontSize="24" Grid.Row="2" Grid.Column="1" />
+                <Label Padding="20,0,0,0" Text="Zespół 2: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="3" />
+                <Label x:Name="Team2Text" Text="" FontSize="24" Grid.Row="3" Grid.Column="1" />
+                <Label Padding="20,0,0,0" Text="Zespół 3: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="4" />
+                <Label x:Name="Team3Text" Text="" FontSize="24" Grid.Row="4" Grid.Column="1" />
+            </Grid>
+
+
+            <Button Text="Popraw informacje" HorizontalOptions="Center" x:Name="CorrectInfoButton" Clicked="CorrectInfoButton_Clicked" />
+
             <Label x:Name="LogLabel" Text=""/>
             <Label Text="" />
             <!--<Button Text="Add New" Clicked="Button_Clicked"/>-->

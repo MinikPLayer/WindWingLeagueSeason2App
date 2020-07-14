@@ -34,8 +34,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Label x:Name="LogLabel" Text=""/>
-            <Label Text="" />
             <!--<Button Text="Add New" Clicked="Button_Clicked"/>-->
         </StackLayout>
     </ContentPage.Content>

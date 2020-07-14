@@ -11,13 +11,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microcharts" Version="0.7.1" />
+    <PackageReference Include="Microcharts.Forms" Version="0.7.1" />
     <PackageReference Include="Network" Version="6.1.4.20" />
     <PackageReference Include="Xam.Plugin.Iconize" Version="3.5.0.129" />
-    <PackageReference Include="Xamarin.Forms" Version="4.3.0.908675" />  
+    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1080" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\Admin\Admin_UserPage.xaml.cs">
+      <DependentUpon>Admin_UserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Admin\Admin_RaceResultsPage.xaml.cs">
+      <DependentUpon>Admin_RaceResultsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Admin\Admin_RegisterUserToSeason.xaml.cs">
+      <DependentUpon>Admin_RegisterUserToSeason.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Admin\Admin_RegisterUserToSeasonSelector.xaml.cs">
+      <DependentUpon>Admin_RegisterUserToSeasonSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Admin\Admin_SeasonSavePage.xaml.cs">
+      <DependentUpon>Admin_SeasonSavePage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\InitScreen.xaml.cs">
       <DependentUpon>InitScreen.xaml</DependentUpon>
     </Compile>
@@ -26,6 +43,9 @@
     </Compile>
     <Compile Update="Views\OptionsPage.xaml.cs">
       <DependentUpon>OptionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DriverInfoPage.xaml.cs">
+      <DependentUpon>DriverInfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\UserRegisteredPage.xaml.cs">
       <DependentUpon>UserRegisteredPage.xaml</DependentUpon>

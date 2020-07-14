@@ -13,7 +13,7 @@ namespace WindWingLeagueSeason2App.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegisterToSeasonPage : ContentPage
     {
-
+        public ObservableCollection<string> teams { get; set; }
 
         public RegisterToSeasonPage()
         {
@@ -21,18 +21,25 @@ namespace WindWingLeagueSeason2App.Views
 
             Title = "Rejestracja";
 
-            BindingContext = this;
+            teams = new ObservableCollection<string>();
+
+            for(int i = 0;i<Models.Team.teams.Length;i++)
+            {
+                teams.Add(Models.Team.teams[i].name);
+            }
         }
 
         protected override void OnAppearing()
         {
-            SeasonName.Text = "Sezon " + SeasonsScreen.seasonSelected.id;
+            BindingContext = this;
+
+            SeasonName.Text = "Rejestracja do sezonu " + SeasonsScreen.seasonSelected.id;
             RegistrationTrack.Text = "Tor: " + SeasonsScreen.seasonSelected.registrationTrack.country;
         }
 
-        async void RegisterToSeason(TimeSpan lapDry, TimeSpan lapWet, string dryLink, string wetLink)
+        async void RegisterToSeason(TimeSpan lapDry, TimeSpan lapWet, string dryLink, string wetLink, int team1, int team2, int team3)
         {
-            string response = await MainPage.networkData.RequestAsync("RegisterSeason;" + SeasonsScreen.seasonSelected.id.ToString() + ";" + lapDry.ToString() + ";" + lapWet.ToString() + ";" + dryLink + ";" + wetLink);
+            string response = await MainPage.networkData.RequestAsync("RegisterSeason;" + SeasonsScreen.seasonSelected.id.ToString() + ";" + lapDry.ToString() + ";" + lapWet.ToString() + ";" + dryLink + ";" + wetLink + ";" + team1.ToString() + ";" + team2.ToString() + ";" + team3.ToString());
 
             if (response == "OK")
             {
@@ -108,7 +115,14 @@ namespace WindWingLeagueSeason2App.Views
                 DisplayAlert("Błąd", "Błędny format czasu na mokrym torze\nPoprawny format: MM:SS:MSS [np. 1:23:456] lub MM.SS.MSS [np.1.23.456]", "OK");
                 return;
             }
-            RegisterToSeason(dryTime, wetTime, DryLinkBox.Text, WetLinkBox.Text);
+
+            if (Team1Picker.SelectedItem == null || Team2Picker.SelectedItem == null || Team3Picker.SelectedItem == null)
+            {
+                DisplayAlert("Błąd", "Musisz wybrać 3 preferowane zespoły", "OK");
+                return;
+            }
+
+            RegisterToSeason(dryTime, wetTime, DryLinkBox.Text, WetLinkBox.Text, Team1Picker.SelectedIndex, Team2Picker.SelectedIndex, Team3Picker.SelectedIndex);
         }
     }
 }

@@ -8,6 +8,8 @@ namespace WindWingLeagueSeason2App.Models
 {
     public class LeaderboardsEntry : INotifyPropertyChanged
     {
+        public User user;
+
         string _prefix;
         public string prefix
         {

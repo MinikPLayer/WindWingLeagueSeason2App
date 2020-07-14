@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms" 
+             mc:Ignorable="d"
+             x:Class="WindWingLeagueSeason2App.Views.DriverInfoPage">
+    <ContentPage.Resources>
+        <x:Double x:Key="textSize">24</x:Double>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout VerticalOptions="StartAndExpand">
+                <Label x:Name="SeasonName" HorizontalOptions="Center" Text="" FontSize="32" TextColor="{DynamicResource DynamicSecondaryTextColor}"/>
+                <Label x:Name="UsernameText" Text="User ???" FontSize="48" HorizontalOptions="Center" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1" />
+                    </Grid.RowDefinitions>
+                    <Label Padding="20,0,0,0" Text="Zespół: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="{StaticResource textSize}" Grid.Row="2" />
+                    <Label HorizontalOptions="End" Text="" Padding="0,0,20,0" x:Name="TeamText" FontSize="{StaticResource textSize}" Grid.Row="2" Grid.Column="1" />
+                    <Label Padding="20,0,0,0" Text="Pozycja: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="{StaticResource textSize}" Grid.Row="3" />
+                    <Label HorizontalOptions="End" Text="" Padding="0,0,20,0" x:Name="PositionText" FontSize="{StaticResource textSize}" Grid.Row="3" Grid.Column="1" />
+                    <Label Padding="20,0,0,0" Text="Punkty: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="{StaticResource textSize}" Grid.Row="4" />
+                    <Label HorizontalOptions="End" Text="" Padding="0,0,20,0" x:Name="PointsText" FontSize="{StaticResource textSize}" Grid.Row="4" Grid.Column="1" />
+                    <Label Padding="20,0,0,0" Text="Średnia pozycja: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="{StaticResource textSize}" Grid.Row="5" />
+                    <Label HorizontalOptions="End" Text="" Padding="0,0,20,0" x:Name="AvergePositionText" FontSize="{StaticResource textSize}" Grid.Row="5" Grid.Column="1" />
+                    <Label Padding="20,0,0,0" Text="Średnia punktów: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="{StaticResource textSize}" Grid.Row="6" />
+                    <Label HorizontalOptions="End" Text="" Padding="0,0,20,0" x:Name="AvergePointsText" FontSize="{StaticResource textSize}" Grid.Row="6" Grid.Column="1" />
+
+                </Grid>
+
+                <microcharts:ChartView x:Name="chartView" HeightRequest="240"/>
+                <Button x:Name="SteamLinkButton" Text="Link do profilu steam" Grid.Row="0" Grid.Column="2" Clicked="SteamLinkButton_Clicked"/>
+                <Button x:Name="BackButton" Text="Powrót" Clicked="BackButton_Clicked"/>
+
+
+                <Label x:Name="LogLabel" Text=""/>
+                <Label Text="" />
+                <!--<Button Text="Add New" Clicked="Button_Clicked"/>-->
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

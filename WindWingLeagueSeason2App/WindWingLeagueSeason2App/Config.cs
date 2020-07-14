@@ -4,10 +4,11 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 using WindWingLeagueSeason2App.Views;
+using Xamarin.Forms;
 
 namespace WindWingLeagueSeason2App
 {
-    [System.Serializable]
+    [Serializable]
     public class Config
     {
         public bool autoLogin;
@@ -20,7 +21,17 @@ namespace WindWingLeagueSeason2App
         {
             try
             {
-                if(!File.Exists(MUtil.GetFilesPath(location)))
+                if (Device.RuntimePlatform == Device.UWP)
+                {
+                    Config conf = new Config();
+
+                    conf.autoLogin = (bool)Application.Current.Properties["autologin"];
+                    conf.autoLoginLogin = Application.Current.Properties["login"].ToString();
+                    conf.autoLoginToken = Application.Current.Properties["token"].ToString();
+                    return conf;
+                }
+
+                if (!File.Exists(MUtil.GetFilesPath(location)))
                 {
                     Debug.Log("[Config.Load] Config file doesn't exist");
                     return new Config();
@@ -38,15 +49,32 @@ namespace WindWingLeagueSeason2App
 
         public static void Save(Config config = null, string location = "config.xml")
         {
-            if (config == null)
+            try
             {
-                config = MainPage.config;
-            }
+                if (config == null)
+                {
+                    config = MainPage.config;
+                }
 
-            XmlSerializer serializer = new XmlSerializer(typeof(Config));
-            TextWriter writer = new StreamWriter(MUtil.GetFilesPath(location));
-            serializer.Serialize(writer, config);
-            writer.Close();
+                if (Device.RuntimePlatform == Device.UWP)
+                {
+                    Application.Current.Properties["autologin"] = config.autoLogin;
+                    Application.Current.Properties["login"] = config.autoLoginLogin;
+                    Application.Current.Properties["token"] = config.autoLoginToken;
+                    Application.Current.SavePropertiesAsync();
+                    return;
+                }
+
+                XmlSerializer serializer = new XmlSerializer(typeof(Config));
+                TextWriter writer = new StreamWriter(MUtil.GetFilesPath(location));
+                serializer.Serialize(writer, config);
+                writer.Close();
+            }
+            catch (Exception e)
+            {
+                Debug.Log("[Config.Save] Exception: " + e.ToString());
+                return;
+            }
         }
     }
 }

@@ -54,6 +54,13 @@ namespace WindWingLeagueSeason2App.Views
         {
             try
             {
+                while(!MainPage.networkData.connected)
+                {
+                    await Task.Delay(10);
+                }
+
+                //MainPage.singleton.DisplayAlert("Getting seasons", "Tak", "OK");
+
                 string response = await MainPage.networkData.RequestAsync("Info;SC"); // Seasons count
                 int count = int.Parse(response);
 

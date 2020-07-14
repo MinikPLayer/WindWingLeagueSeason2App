@@ -19,6 +19,36 @@ namespace WindWingLeagueSeason2App.Models
             this.iconPath = iconPath;
         }
 
+        public static Team GetTeam(int id)
+        {
+            if (id < 0 || id >= teams.Length) return null;
+            return teams[id];
+        }
+
+        public static Team GetTeamShort(string shortName)
+        {
+            for (int i = 0; i < teams.Length; i++)
+            {
+                if (teams[i].shortName == shortName)
+                {
+                    return teams[i];
+                }
+            }
+            return null;
+        }
+
+        public static Team GetTeam(string name)
+        {
+            for (int i = 0; i < teams.Length; i++)
+            {
+                if (teams[i].name == name)
+                {
+                    return teams[i];
+                }
+            }
+            return null;
+        }
+
         public static Team[] teams = new Team[] {
             new Team(0, "Mercedes", "MER", ""),
             new Team(1, "Ferrari", "FER", ""),
@@ -30,7 +60,9 @@ namespace WindWingLeagueSeason2App.Models
             new Team(7, "Alfa Romeo", "ARM", ""),
             new Team(8, "Toro Rosso", "TRS", ""),
             new Team(9, "Williams", "WIL", ""),
-            new Team(10, "Other", "OTH", "")
+            new Team(10, "Niesprecyzowany", "OTH", "")
         };
+
+        public static Team other = teams[10];
     }
 }

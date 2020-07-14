@@ -22,6 +22,8 @@ namespace WindWingLeagueSeason2App.Views
         public static string setLogin = "";
         public static string setPassword = "";
 
+        public static string token = "";
+
         public LoginScreen()
         {
             InitializeComponent();
@@ -55,7 +57,7 @@ namespace WindWingLeagueSeason2App.Views
             
         }
 
-        async Task LoginT(string login, string token)
+        /*async Task LoginT(string login, string token)
         {
             string data = await MainPage.networkData.RequestAsync("LoginT;" + login + ";" + token.Replace(";", "\\:"));
             string[] datas = data.Split(';');
@@ -81,7 +83,7 @@ namespace WindWingLeagueSeason2App.Views
             }
 
             LoginButton.IsEnabled = true;
-        }
+        }*/
 
         async Task Login(string login, string password, bool autoLogin)
         {
@@ -95,13 +97,15 @@ namespace WindWingLeagueSeason2App.Views
 
                 if(datas.Length > 2)
                 {
-                    Debug.Log("Token: \"" + datas[2].Replace("\\:",";") + "\"");
+                    //Debug.Log("Token: \"" + datas[2].Replace("\\:",";") + "\"");
+
+                    token = datas[2].Replace("\\:", ";");
 
                     if(autoLogin)
                     {
                         MainPage.config.autoLogin = true;
                         MainPage.config.autoLoginLogin = login;
-                        MainPage.config.autoLoginToken = datas[2].Replace("\\:", ";");
+                        MainPage.config.autoLoginToken = token;//datas[2].Replace("\\:", ";");
 
                         Config.Save();
                     }
@@ -109,7 +113,6 @@ namespace WindWingLeagueSeason2App.Views
                     {
                         if(datas[3] == "True")
                         {
-                            
                             admin = true;
                         }
                     }
@@ -138,7 +141,9 @@ namespace WindWingLeagueSeason2App.Views
             if (loggedIn)
             {
                 MainPage.config.autoLogin = false;
-                Config.Save();
+                MainPage.config.autoLoginLogin = "";
+                MainPage.config.autoLoginToken = "";
+                Config.Save(MainPage.config);
 
                 loggedIn = false;
 
@@ -146,6 +151,10 @@ namespace WindWingLeagueSeason2App.Views
 
                 LoginBox.Text = "";
                 PasswordBox.Text = "";
+            }
+            else
+            {
+                Debug.Log("[LoginScreen.LogOut()] Not logged in");
             }
         }
 

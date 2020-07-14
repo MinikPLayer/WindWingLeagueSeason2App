@@ -32,16 +32,19 @@
             <Style ApplyToDerivedTypes="True" TargetType="Entry">
                 <Setter Property="TextColor" Value="{DynamicResource DynamicPrimaryTextColor}"/>
                 <Setter Property="PlaceholderColor" Value="{DynamicResource DynamicSecondaryTextColor}"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource DynamicBackgroundColor}"/>
             </Style>
 
             <Style ApplyToDerivedTypes="True" TargetType="Picker">
                 <Setter Property="TitleColor" Value="{DynamicResource DynamicSecondaryTextColor}"/>
                 <Setter Property="TextColor" Value="{DynamicResource DynamicPrimaryTextColor}"/>
+                <Setter Property="Opacity" Value="{DynamicResource DynamicBackgroundColor}"/>
             </Style>
 
             <Style ApplyToDerivedTypes="True" TargetType="DatePicker">
                 <Setter Property="TextColor" Value="{DynamicResource DynamicSecondaryTextColor}"/>
             </Style>
+
 
 
             <Style TargetType="NavigationPage">

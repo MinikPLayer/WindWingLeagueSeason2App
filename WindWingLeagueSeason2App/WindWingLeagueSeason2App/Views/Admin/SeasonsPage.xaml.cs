@@ -23,6 +23,8 @@ namespace WindWingLeagueSeason2App.Views.Admin
 
         public ObservableCollection<string> tracks { get; set; }
 
+        public static bool notUpdateSeason = false;
+
         public SeasonsPage()
         {
             InitializeComponent();
@@ -34,6 +36,7 @@ namespace WindWingLeagueSeason2App.Views.Admin
             tracks = new ObservableCollection<string>();
 
             BindingContext = this;
+            
         }
 
         void UpdateSeason()
@@ -41,6 +44,7 @@ namespace WindWingLeagueSeason2App.Views.Admin
             
             if (SeasonsScreen.seasonSelected == null)
             {
+                Debug.Log("[Admin.SeasonsPage] Season selected is null");
                 return;
             }
             IsBusy = true;
@@ -65,7 +69,6 @@ namespace WindWingLeagueSeason2App.Views.Admin
                 }
                 else
                 {
-                    //drivers.Add(new Models.DriverEntry { name = SeasonsScreen.seasonSelected.users[i].user.login });
                     drivers.Add(new DriverEntry { user = SeasonsScreen.seasonSelected.users[i].user, seasonUser = SeasonsScreen.seasonSelected.users[i] });
                 }
             }
@@ -75,12 +78,20 @@ namespace WindWingLeagueSeason2App.Views.Admin
                 tracks.Add(Track.tracks[i].country);
             }
             DisableButtons();
+
+            SortRaces();
             IsBusy = false;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            if (notUpdateSeason)
+            {
+                notUpdateSeason = false;
+                return;
+            }
+
             UpdateSeason();
 
             for(int i = 0;i<SeasonsScreen.seasons.Count;i++)
@@ -96,36 +107,24 @@ namespace WindWingLeagueSeason2App.Views.Admin
         {
             base.OnDisappearing();
 
-            SeasonsScreen.GetSeasons();
+            if(!notUpdateSeason)
+            {
+                SeasonsScreen.GetSeasons();
+            }
+            
         }
 
         async void AddSeason()
         {
-            //string seasonStr = "Season{track{c(Francja)},finished{True},races{race{track{id(0)},date{01.06.2020 20:00:00}},race{track{id(1)},date{02.06.2020 20:00:00}}}}";
             var season = new Season(SeasonsScreen.seasons[SeasonsScreen.seasons.Count - 1].id + 1, 0, 0, Track.GetTrack(5), new List<Race> {
-                /*new Race(1, new DateTime(2020, 06, 01, 20, 00, 00)),
-                new Race(2, new DateTime(2020, 06, 02, 20, 00, 00)),
-                new Race(3, new DateTime(2020, 06, 03, 20, 00, 00)),
-                new Race(4, new DateTime(2020, 06, 04, 20, 00, 00)),
-                new Race(5, new DateTime(2020, 06, 05, 20, 00, 00)),
-                new Race(6, new DateTime(2020, 06, 06, 20, 00, 00)),
-                new Race(7, new DateTime(2020, 06, 07, 20, 00, 00)),
-                new Race(8, new DateTime(2020, 06, 08, 20, 00, 00)),
-                new Race(9, new DateTime(2020, 06, 09, 20, 00, 00)),
-                new Race(10, new DateTime(2020, 06, 10, 20, 00, 00))*/
             }, new RegistrationData(true, new DateTime(2020,06,06,23,59,59)));
 
             string seasonStr = season.Serialize();
 
-            //string response = await MainPage.networkData.RequestAsync("Admin;Season;Add;" + (SeasonsScreen.seasons[SeasonsScreen.seasons.Count - 1].id + 1).ToString());
-            //string response = await MainPage.networkData.RequestAsync("Admin;Season;Add;" + (SeasonsScreen.seasons[SeasonsScreen.seasons.Count - 1].id + 1).ToString() + ";" + seasonStr);
             string response = await MainPage.networkData.RequestAsync("Admin;Season;Add;" + seasonStr);
             if (response == "OK")
             {
                 await MenuPage.actualMenu.UpdateSeasons(true, false);
-                //MenuPage.actualMenu._SeasonPicker.IsEnabled = false;
-                //MenuPage.actualMenu._SeasonPicker.SelectedIndex = SeasonsScreen.seasons.Count - 1;
-                //MenuPage.actualMenu._SeasonPicker.IsEnabled = true;
                 SeasonsScreen.seasonSelected = SeasonsScreen.seasons[SeasonsScreen.seasons.Count - 1];
 
                 SeasonName.Text = "Sezon " + SeasonsScreen.seasonSelected.id.ToString();
@@ -154,31 +153,10 @@ namespace WindWingLeagueSeason2App.Views.Admin
             AddSeason();
         }
 
-        async void Save()
-        {
-            var season = SeasonsScreen.seasonSelected.Serialize();
-            string response = await MainPage.networkData.RequestAsync("Admin;Season;Modify;" + SeasonsScreen.seasonSelected.id.ToString() + ";" + season);
-            if(response != "OK")
-            {
-                string[] data = response.Split(';');
-                if(data.Length > 1)
-                {
-                    DisplayAlert("Błąd", "Błąd zapisywania sezonu na server: " + data[1], "OK");
-                }
-                else
-                {
-                    DisplayAlert("Błąd", "Błąd zapisywania sezonu na server: " + data[0], "OK");
-                }
-            }
-            else
-            {
-                DisplayAlert("Zapisano", "Zapisywanie sezonu powiodło się", "OK");
-            }
-        }
-
         private void SaveButton_Clicked(object sender, EventArgs e)
         {
-            Save();
+            notUpdateSeason = true;
+            MainPage.singleton.NavigateFromMenu((int)MenuItemType.ADMIN_SaveSeason);
         }
 
         void DisableButtons(int index = -1)
@@ -210,6 +188,27 @@ namespace WindWingLeagueSeason2App.Views.Admin
             if(index == 0)
             {
                 PrevSeasonButton.IsEnabled = false;
+            }
+        }
+
+        void SortRaces()
+        {
+            for(int i = 0;i<races.Count;i++)
+            {
+                int index = i;
+                DateTime min = DateTime.MaxValue;
+                for(int j = i;j<races.Count;j++)
+                {
+                    if(races[j].date < min)
+                    {
+                        index = j;
+                        min = races[j].date;
+                    }
+                }
+
+                RaceEntry pom = races[i];
+                races[i] = races[index];
+                races[index] = pom;
             }
         }
 
@@ -248,7 +247,8 @@ namespace WindWingLeagueSeason2App.Views.Admin
         private void RacesListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             RaceEntry entry = (RaceEntry)e.SelectedItem;
-            for(int i = 0;i<races.Count;i++)
+            if (entry == null) return;
+            for (int i = 0;i<races.Count;i++)
             {
                 races[i].highlighted = false;
             }
@@ -257,16 +257,21 @@ namespace WindWingLeagueSeason2App.Views.Admin
 
             RaceDatePicker.Date = entry.date;
             RaceTrackPicker.SelectedItem = entry.race.track.country;
+
+            RaceResultsButton.IsEnabled = entry.race.date < DateTime.Now;
+            
         }
 
         private void DriversListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             DriverEntry entry = (DriverEntry)e.SelectedItem;
+            if (entry == null) return;
             for (int i = 0; i < drivers.Count; i++)
             {
                 drivers[i].highlighted = false;
             }
 
+            Debug.Log("Highlighted driverentry " + entry.name);
             entry.highlighted = true;
         }
 
@@ -308,6 +313,8 @@ namespace WindWingLeagueSeason2App.Views.Admin
             SeasonsScreen.seasonSelected.races.Add(entry.race);
 
             RacesListView.SelectedItem = entry;
+
+            SortRaces();
         }
 
         private void ChangeRaceButton_Clicked(object sender, EventArgs e)
@@ -319,9 +326,6 @@ namespace WindWingLeagueSeason2App.Views.Admin
 
             RaceEntry entry = (RaceEntry)RacesListView.SelectedItem;
 
-            //SeasonsScreen.seasonSelected.races.Remove(entry.race);
-            //entry.race = new Race(RaceTrackPicker.SelectedIndex, RaceDatePicker.Date.AddHours(20));
-            //SeasonsScreen.seasonSelected.races.Add(entry.race);
             bool modified = false;
             for(int i = 0;i<SeasonsScreen.seasonSelected.races.Count;i++)
             {
@@ -337,6 +341,8 @@ namespace WindWingLeagueSeason2App.Views.Admin
             {
                 DisplayAlert("Desynchronizacja danych", "Uruchom ponownie tą kartę", "OK");
             }
+
+            SortRaces();
         }
 
         async void DeleteSeason()
@@ -369,6 +375,67 @@ namespace WindWingLeagueSeason2App.Views.Admin
         private void DeleteSeasonButton_Clicked(object sender, EventArgs e)
         {
             DeleteSeason();
+        }
+
+        private void InfoDriverButton_Clicked(object sender, EventArgs e)
+        {
+            if(DriversListView.SelectedItem == null)
+            {
+                return;
+            }
+
+            notUpdateSeason = true;
+
+            Admin_UserPage.user = ((DriverEntry)DriversListView.SelectedItem).seasonUser;
+
+            MainPage.singleton.NavigateFromMenu((int)MenuItemType.ADMIN_SeasonUser);
+        }
+
+        private void RaceResultsButton_Clicked(object sender, EventArgs e)
+        {
+            if(RacesListView.SelectedItem == null)
+            {
+                Debug.Log("RaceListView.SelectedItem is null");
+                return;
+            }
+
+            notUpdateSeason = true;
+
+            Admin_RaceResultsPage.race = ((RaceEntry)RacesListView.SelectedItem).race;
+            MainPage.singleton.NavigateFromMenu((int)MenuItemType.ADMIN_RaceResults);
+        }
+
+        private void AddDriverButton_Clicked(object sender, EventArgs e)
+        {
+            //notUpdateSeason = true;
+            Admin_RegisterUserToSeasonSelector.season = SeasonsScreen.seasonSelected;
+            MainPage.singleton.NavigateFromMenu((int)MenuItemType.ADMIN_RegisterSeasonUsersSelector);
+        }
+
+        async void CreateUser()
+        {
+            string login = await DisplayPromptAsync("Utwórz użytkownika", "Wpisz pseudonim użytkownika:", "Utwórz", "Anuluj");
+            if (login == null) return;
+
+            string response = await MainPage.networkData.RequestAsync("Admin;CreateUser;" + login);
+            if(response == "OK")
+            {
+                DisplayAlert("Utwórz użytkownika", "Pomyślnie utworzono użytkownika", "OK");
+                await MenuPage.actualMenu.UpdateSeasons(true);
+            }
+            else
+            {
+                bool r = await DisplayAlert("Błąd", "Błąd tworzenia użytkownika", "Więcej informacji", "OK");
+                if(r)
+                {
+                    DisplayAlert("Więcej informacji", response, "OK");
+                }
+            }
+        }
+
+        private void CreateUserButton_Clicked(object sender, EventArgs e)
+        {
+            CreateUser();
         }
     }
 }
