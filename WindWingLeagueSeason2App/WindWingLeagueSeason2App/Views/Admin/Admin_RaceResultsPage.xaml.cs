@@ -148,10 +148,18 @@ namespace WindWingLeagueSeason2App.Views
                     {
                         return "DNF";
                     }
-                    if(result?.started == false || place == -2)
+                    if (result?.started == false)
                     {
-                        return "DNS";
+                        if(result.dnsu)
+                        {
+                            return "DND";
+                        }
+                        if (place == -2)
+                        {
+                            return "DNS";
+                        }
                     }
+                    
                     return _gapStr;
                 }
                 set
@@ -289,7 +297,7 @@ namespace WindWingLeagueSeason2App.Views
             race.results.Clear();
             for(int i = 0;i<SeasonsScreen.seasonSelected.users.Count;i++)
             {
-                var result = new Race.Result(SeasonsScreen.seasonSelected.users[i].user, i + 1, TimeSpan.Zero, TimeSpan.Zero, false, true);
+                var result = new Race.Result(SeasonsScreen.seasonSelected.users[i].user, SeasonsScreen.seasonSelected.users[i].team, i + 1, TimeSpan.Zero, TimeSpan.Zero, false, true);
                 race.results.Add(result);
                 AddEntry(result);
             }
@@ -368,6 +376,13 @@ namespace WindWingLeagueSeason2App.Views
                             entries[i].result.place = -2;
                             entries[i].result.time = TimeSpan.Zero;//new TimeSpan(0, 9, 59, 59, 999);
                             entries[i].result.started = false;
+                        }
+                        else if(entries[i].gapStr == "DND")
+                        {
+                            entries[i].result.place = -3;
+                            entries[i].result.time = TimeSpan.Zero;
+                            entries[i].result.started = false;
+                            entries[i].result.dnsu = true;
                         }
                         else
                         {

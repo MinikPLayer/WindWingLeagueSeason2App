@@ -9,6 +9,7 @@ namespace WindWingLeagueSeason2App.Models
         InitScreen,
         Login,
         Leaderboards,
+        TeamLeaderboards,
         Options,
         Register,
         RegisterToSeason,
@@ -19,6 +20,7 @@ namespace WindWingLeagueSeason2App.Models
         ADMIN_Seasons,
         ADMIN_SeasonUser,
         ADMIN_SaveSeason,
+        ADMIN_CreateSeason,
         ADMIN_RaceResults,
         ADMIN_RegisterSeasonUser,
         ADMIN_RegisterSeasonUsersSelector

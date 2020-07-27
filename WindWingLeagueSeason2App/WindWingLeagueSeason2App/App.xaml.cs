@@ -17,7 +17,7 @@ namespace WindWingLeagueSeason2App
 #endif
 
 
-        public const int serverSupportVersion = 4;
+        public const int serverSupportVersion = 5;
         public const int appVersion = 700;
 
         public App()

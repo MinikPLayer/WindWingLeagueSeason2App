@@ -179,6 +179,7 @@ namespace WindWingLeagueSeason2App.Models
         public List<SeasonUser> users = new List<SeasonUser>();
         public RegistrationData registrationData;
         public int finishedRaces;
+        public int gameVersion;
         public bool finished
         {
             get
@@ -239,6 +240,10 @@ namespace WindWingLeagueSeason2App.Models
 
                     case "registration":
                         registrationData.Deserialize(header + "{" + content + "}");
+                        return true;
+
+                    case "gameVersion":
+                        gameVersion = int.Parse(content);
                         return true;
 
                     case "track":
@@ -398,6 +403,7 @@ namespace WindWingLeagueSeason2App.Models
             str += "id{" + id.ToString() + "},";
             str += registrationData.Serialize() + ",";
             str += registrationTrack.Serialize() + ",";
+            str += "gameVersion{" + gameVersion.ToString() + "},";
             str += "finishedRaces{" + finishedRaces + "}";
 
             str += ",races{";
@@ -458,6 +464,8 @@ namespace WindWingLeagueSeason2App.Models
             this.finishedRaces = 0;
 
             this.races = new List<Race>(racesCount);
+
+            this.gameVersion = 2019;
 
             registrationData = new RegistrationData(false, DateTime.MinValue);
 

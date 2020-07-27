@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\Admin\Admin_CreateSeasonPage.xaml.cs">
+      <DependentUpon>Admin_CreateSeasonPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Admin\Admin_UserPage.xaml.cs">
       <DependentUpon>Admin_UserPage.xaml</DependentUpon>
     </Compile>
@@ -40,6 +43,12 @@
     </Compile>
     <Compile Update="Views\Admin\SeasonsPage.xaml.cs">
       <DependentUpon>SeasonsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\LeaderboardsPage.xaml.cs">
+      <DependentUpon>LeaderboardsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TeamLeaderboardsPage.xaml.cs">
+      <DependentUpon>TeamLeaderboardsPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\OptionsPage.xaml.cs">
       <DependentUpon>OptionsPage.xaml</DependentUpon>
@@ -68,7 +77,7 @@
     <EmbeddedResource Update="Views\LabeledSwitch.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\LeaderboardsPage.xaml">
+    <EmbeddedResource Update="Views\TeamLeaderboardsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

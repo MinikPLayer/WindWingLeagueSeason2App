@@ -1,10 +1,9 @@
-﻿using WindWingLeagueSeason2App.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using System.Threading.Tasks;
+using WindWingLeagueSeason2App.Models;
+using Xamarin.Forms;
 
 namespace WindWingLeagueSeason2App.Views
 {
@@ -62,6 +61,7 @@ namespace WindWingLeagueSeason2App.Views
                 else
                 {
                     menuItems.Add(new HomeMenuItem { Id = MenuItemType.Leaderboards, Title = "Ranking" });
+                    menuItems.Add(new HomeMenuItem { Id = MenuItemType.TeamLeaderboards, Title = "Ranking drużyn" });
                     if (!SeasonsScreen.seasonSelected.userRegistered && !(SeasonsScreen.seasonSelected.finishedRaces >= SeasonsScreen.seasonSelected.racesCount))
                     {
                         menuItems.Add(new HomeMenuItem { Id = MenuItemType.RegisterToSeason, Title = "Rejestracja" });
@@ -151,12 +151,6 @@ namespace WindWingLeagueSeason2App.Views
                     }
                 }
             }
-
-            //SeasonPicker.SelectedItem = SeasonsScreen.seasonSelected;
-
-            //SeasonPicker.
-
-
         }
 
         async void LogOutButton_ClickedAsync()

@@ -28,7 +28,7 @@ namespace WindWingLeagueSeason2App.Views
 
             for (int i = 0; i < Team.teams.Length; i++)
             {
-                teams.Add(Team.teams[i].name);
+                teams.Add(Team.teams[i].GetName());
             }
         }
 

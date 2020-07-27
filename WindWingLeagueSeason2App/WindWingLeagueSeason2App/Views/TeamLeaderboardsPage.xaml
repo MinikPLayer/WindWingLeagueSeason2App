@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="WindWingLeagueSeason2App.Views.LeaderboardsPage">
+             x:Class="WindWingLeagueSeason2App.Views.TeamLeaderboardsPage">
     <ContentPage.Content>
         <StackLayout>
             <ListView x:Name="EntriesListView"
@@ -14,8 +14,8 @@
                       RowHeight="48">
                 <d:ListView.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
-                        <x:String>First test</x:String>
-                        <x:String>Second test</x:String>
+                        <x:String>Alfa Romeo</x:String>
+                        <x:String>McLaren</x:String>
                     </x:Array>
                 </d:ListView.ItemsSource>
                 <ListView.ItemTemplate>

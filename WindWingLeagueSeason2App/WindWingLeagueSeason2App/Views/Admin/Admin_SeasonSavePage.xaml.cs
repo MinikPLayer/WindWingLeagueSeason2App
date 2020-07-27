@@ -55,7 +55,21 @@ namespace WindWingLeagueSeason2App.Views.Admin
 
         async Task SaveSeason()
         {
+
+
             SeasonsScreen.seasonSelected.SortRaces();
+
+            // TODO: Add real team changing
+            Season s = SeasonsScreen.seasonSelected;
+            for(int i = 0;i<s.races.Count;i++)
+            {
+                for(int j = 0;j<s.races[i].results.Count;j++)
+                {
+                    s.races[i].results[j].team = (await s.GetUser(s.races[i].results[j].user.id)).team;
+                }
+            }
+            // END TODO
+
             var season = SeasonsScreen.seasonSelected.Serialize();
 
             int ogTimeout = MainPage.networkData.timeout;

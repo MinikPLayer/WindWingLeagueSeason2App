@@ -36,12 +36,20 @@ namespace WindWingLeagueSeason2App.Views
             MasterBehavior = MasterBehavior.Popover;
 
             //MenuPages.Add((int)MenuItemType.Browse, (NavigationPage)Detail);
+
+            MenuPages.Add((int)MenuItemType.InitScreen, (NavigationPage)Detail);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
             if (networkData == null)
             {
                 if (App.debug)
                 {
-                    //networkData = new NetworkData("192.168.1.103", 8148);
-                    networkData = new NetworkData("minik.ml", 8148);
+                    networkData = new NetworkData("192.168.1.103", 8148);
+                    //networkData = new NetworkData("minik.ml", 8148);
                 }
                 else
                 {
@@ -49,7 +57,6 @@ namespace WindWingLeagueSeason2App.Views
                 }
             }
 
-            MenuPages.Add((int)MenuItemType.InitScreen, (NavigationPage)Detail);
         }
 
         public void CloseAllPages()
@@ -106,6 +113,9 @@ namespace WindWingLeagueSeason2App.Views
                     case (int)MenuItemType.Leaderboards:
                         MenuPages.Add(id, new NavigationPage(new LeaderboardsPage()));
                         break;
+                    case (int)MenuItemType.TeamLeaderboards:
+                        MenuPages.Add(id, new NavigationPage(new TeamLeaderboardsPage()));
+                        break;
                     case (int)MenuItemType.About:
                         MenuPages.Add(id, new NavigationPage(new AboutPage()));
                         break;
@@ -132,6 +142,9 @@ namespace WindWingLeagueSeason2App.Views
                         break;
                     case (int)MenuItemType.ADMIN_SaveSeason:
                         MenuPages.Add(id, new NavigationPage(new Admin.SeasonSavePage()));
+                        break;
+                    case (int)MenuItemType.ADMIN_CreateSeason:
+                        MenuPages.Add(id, new NavigationPage(new Admin.Admin_CreateUserPage()));
                         break;
                     case (int)MenuItemType.ADMIN_SeasonUser:
                         MenuPages.Add(id, new NavigationPage(new Admin.Admin_UserPage()));

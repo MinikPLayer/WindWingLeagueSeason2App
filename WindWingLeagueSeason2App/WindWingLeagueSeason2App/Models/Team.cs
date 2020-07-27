@@ -1,22 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WindWingLeagueSeason2App.Views;
 
 namespace WindWingLeagueSeason2App.Models
 {
     public class Team
     {
         public int id;
-        public string name;
+        string _name;
         public string shortName;
         public string iconPath;
+
+        public string name
+        {
+            get
+            {
+                return GetName();
+            }
+        }
 
         public Team(int id, string name, string shortName, string iconPath)
         {
             this.id = id;
-            this.name = name;
+            this._name = name;
             this.shortName = shortName;
             this.iconPath = iconPath;
+        }
+
+        public string GetName(int gameVersion = -1)
+        {
+            if(gameVersion == -1)
+            {
+                if(SeasonsScreen.seasonSelected == null)
+                {
+                    gameVersion = 2019;
+                }
+                else
+                {
+                    gameVersion = SeasonsScreen.seasonSelected.gameVersion;
+                }
+            }
+
+            if (gameVersion == 2020 && id == 8) // Toro Rosso
+            {
+                return "Alpha Tauri";
+            }
+
+            return _name;
+        }
+
+        public static string GetName(int id, int gameVersion = -1)
+        {
+            return GetTeam(id).GetName(gameVersion);
         }
 
         public static Team GetTeam(int id)

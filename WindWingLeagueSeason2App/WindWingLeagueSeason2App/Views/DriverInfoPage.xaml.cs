@@ -101,7 +101,7 @@ namespace WindWingLeagueSeason2App.Views
             SeasonName.Text = "Sezon " + SeasonsScreen.seasonSelected.id.ToString();
             UsernameText.Text = user.user.login;
 
-            TeamText.Text = user.team.name;
+            TeamText.Text = user.team.GetName();
             PositionText.Text = entry.prefix.Replace(")", "");
             int points = entry.score;
             PointsText.Text = points.ToString();

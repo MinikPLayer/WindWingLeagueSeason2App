@@ -114,43 +114,12 @@ namespace WindWingLeagueSeason2App.Views.Admin
             
         }
 
-        async void AddSeason()
-        {
-            var season = new Season(SeasonsScreen.seasons[SeasonsScreen.seasons.Count - 1].id + 1, 0, 0, Track.GetTrack(5), new List<Race> {
-            }, new RegistrationData(true, new DateTime(2020,06,06,23,59,59)));
 
-            string seasonStr = season.Serialize();
-
-            string response = await MainPage.networkData.RequestAsync("Admin;Season;Add;" + seasonStr);
-            if (response == "OK")
-            {
-                await MenuPage.actualMenu.UpdateSeasons(true, false);
-                SeasonsScreen.seasonSelected = SeasonsScreen.seasons[SeasonsScreen.seasons.Count - 1];
-
-                SeasonName.Text = "Sezon " + SeasonsScreen.seasonSelected.id.ToString();
-
-                UpdateSeason();
-            }
-            else
-            {
-                string[] data = response.Split(';');
-                if(data.Length > 1)
-                {
-                    DisplayAlert("Błąd", data[1], "OK");
-                }
-                else
-                {
-                    DisplayAlert("Błąd", data[0], "OK");
-                }
-                
-            }
-
-            
-        }
 
         private void AddSeasonButton_Clicked(object sender, EventArgs e)
         {
-            AddSeason();
+            notUpdateSeason = true;
+            MainPage.singleton.NavigateFromMenu((int)MenuItemType.ADMIN_CreateSeason);
         }
 
         private void SaveButton_Clicked(object sender, EventArgs e)

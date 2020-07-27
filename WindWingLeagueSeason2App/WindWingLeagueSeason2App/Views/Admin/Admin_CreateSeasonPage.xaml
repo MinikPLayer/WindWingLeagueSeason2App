@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="WindWingLeagueSeason2App.Views.Admin.Admin_CreateUserPage"
+             xmlns:local="clr-namespace:WindWingLeagueSeason2App.Views.Admin"
+             xmlns:vm="clr-namespace:WindWingLeagueSeason2App.ViewModels"
+             Title="{Binding Title}">
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout VerticalOptions="StartAndExpand">
+                <Button x:Name="BackButton" Text="Powrót" Clicked="BackButton_Clicked" />
+                <Label x:Name="SeasonNameText" Text="Sezon ???" FontSize="48" HorizontalOptions="Center" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Label Padding="20,0,0,0" Text="Wersja gry: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="0" VerticalOptions="Center" />
+                    <Entry x:Name="GameVersionText" Text="2019" FontSize="24" Grid.Row="0" Grid.Column="1" />
+                    <Label Padding="20,0,0,0" Text="Tor do rekrutacji: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="1" />
+                    <Picker x:Name="RegisterTrackPicker" ItemsSource="{Binding tracks}" Grid.Row="1" Grid.Column="1" />
+                    <Label Padding="20,0,0,0" Text="Data końca rekrutacji: " TextColor="{DynamicResource DynamicSecondaryTextColor}" FontSize="24" Grid.Row="2" />
+                    <DatePicker x:Name="EndTimePicker" Grid.Row="2" Grid.Column="1" />
+                </Grid>
+                <Button x:Name="SaveButton" Text="Utwórz" Clicked="SaveButton_Clicked" />
+
+                <Label x:Name="LogLabel" Text=""/>
+                <Label Text="" />
+                <!--<Button Text="Add New" Clicked="Button_Clicked"/>-->
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+
+</ContentPage>
